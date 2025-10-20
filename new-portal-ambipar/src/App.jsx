@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import Header from './components/Header'
+import LinksCarousel from "./components/LinksCarousel";
+
 import "./index.css";
 
 
@@ -73,7 +75,8 @@ function App() {
             </div>
           </div>
         </section>
-
+        {/* Carrossel de Links */}
+        <LinksCarousel />
       </main>
     </div>
   )

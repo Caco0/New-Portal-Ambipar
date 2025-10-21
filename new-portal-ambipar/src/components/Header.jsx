@@ -32,23 +32,23 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4 py-1 flex justify-between items-center">
             {/* Logo + Nome */}
             <div className="flex items-center space-x-1">
-            <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+            <h1 className="text-2xl font-bold text-gray-800 mr-2 dark:text-gray-100">
                 Portal
             </h1>
             <img
                 src={theme === "dark" ? "/ambipar-logo-dark.png" : "/ambipar-logo-light.png"}
                 alt="Ambipar Logo"
-                className="ml-8 w-20 h-20 object-contain transition-all" 
+                className="ml-8 mt-2 w-20 h-20 object-contain transition-all" 
             />
             </div>
 
             {/* Menu Desktop */}
-            <nav className="hidden md:flex space-x-6 text-gray-700 dark:text-gray-200">
-            <a href="#" className="hover:text-green-600">Home</a>
-            <a href="workflow-processos" className="hover:text-green-600">Workflow Processos</a>
-            <a href="#" className="hover:text-green-600">Links</a>
-            <a href="#" className="hover:text-green-600">Agenda</a>
-            <a href="#" className="hover:text-green-600">Ferramentas</a>
+            <nav className="hidden md:flex space-x-6 text-[#B2CC21] dark:text-[#CDFF00]">
+            <a href="#" className="text-black dark:text-[#CDFF00] hover:text-[#B2CC21] dark:hover:text-white">Home</a>
+            <a href="workflow-processos" className="text-black dark:text-[#CDFF00] hover:text-[#B2CC21] dark:hover:text-white">Workflow Processos</a>
+            <a href="#" className="text-black dark:text-[#CDFF00] hover:text-[#B2CC21] dark:hover:text-white">Acessos Rápidos</a>
+            <a href="#" className="text-black dark:text-[#CDFF00] hover:text-[#B2CC21] dark:hover:text-white">Sala de Reuniões</a>
+            <a href="#" className="text-black dark:text-[#CDFF00] hover:text-[#B2CC21] dark:hover:text-white">Ferramentas</a>
             </nav>
 
             {/* Botões */}

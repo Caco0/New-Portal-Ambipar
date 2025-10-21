@@ -68,6 +68,20 @@ button:focus-visible {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+@keyframes scroll-slow {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-slow {
+  display: flex;
+  animation: scroll-slow 30s linear infinite;
+  width: max-content;
+}
 
 @media (prefers-color-scheme: light) {
   :root {

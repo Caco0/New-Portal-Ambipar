@@ -1,55 +1,52 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import "../index.css"; // vamos usar uma animação customizada definida lá
 
 export default function LinksCarousel() {
     const carouselRef = useRef(null);
 
-    // Rolagem automática
-    useEffect(() => {
-        const interval = setInterval(() => {
+    const handleManualScroll = (direction) => {
         if (carouselRef.current) {
-            carouselRef.current.scrollBy({
-            left: 250,
-            behavior: "smooth",
-            });
-        }
-        }, 4000); // tempo entre rolagens
-        return () => clearInterval(interval);
-    }, []);
+            // pausa a animação CSS
+            carouselRef.current.style.animationPlayState = "paused";
 
-    const scroll = (direction) => {
-        if (carouselRef.current) {
-        carouselRef.current.scrollBy({
+            // faz o scroll manual
+            carouselRef.current.scrollBy({
             left: direction === "left" ? -300 : 300,
             behavior: "smooth",
-        });
+            });
+
+            // retoma a animação após 5 segundos
+            setTimeout(() => {
+            carouselRef.current.style.animationPlayState = "running";
+            }, 5000);
         }
-    };
+};
 
     const links = [
         {
         title: "🌐 Sistema Sygecom",
         url: "https://cloud5.sygecom.com.br/sagi_magma.html",
         color: "border-green-500",
-        description: "Link do Sygecom."
+        description: "Processos sistema Sygecom"
         },
         {
         title: "🙋‍♀️ Feedz",
         url: "https://app.feedz.com.br",
         color: "border-blue-500",
-        description: "Acesse e-mails, Teams e outros apps corporativos."
+        description: "Acesse nossa Comunidade Ambipar Limeira e Andradas"
         },
         {
         title: "🔧 Chamado TI",
         url: "http://10.0.0.251/glpi/front/central.php",
         color: "border-yellow-500",
-        description: "Painéis e relatórios interativos."
+        description: "Painel de chamados de TI"
         },
         {
         title: "🌐 Nosso Site",
         url: "https://fundicaomagma.com.br/",
         color: "border-purple-500",
-        description: "Capacitações internas e vídeos educativos."
+        description: "Nossa página Web"
         },
         {
         title: "🚚 Logistica",
@@ -57,33 +54,65 @@ export default function LinksCarousel() {
         color: "border-pink-500",
         description: "Envie solicitações e formulários de suporte."
         },
+        {
+        title: "💰 Financeiro",
+        url: "https://forms.office.com",
+        color: "border-green-500",
+        description: "Pagina com todos os links Finaceiros."
+        },
+        {
+        title: "💰 Dashbord",
+        url: "http://10.0.0.251/#",
+        color: "border-red-500",
+        description: "Dashbord Power BI"
+        },
+        {
+        title: "📊 Registro de Ponto",
+        url: "https://ezpoint.com.br/",
+        color: "border-black",
+        description: "Registro de ponto"
+        },
+        {
+        title: "🔁 Workflow Processos",
+        url: "workflow",
+        color: "border-purple-500",
+        description: "Processos capacitações internas e vídeos educativos."
+        },
+        {
+        title: "👨‍💻 TI Links",
+        url: "#",
+        color: "border-yellow-500",
+        description: "Links de serviços de TI"
+        },
     ];
 
+    // Duplicamos os links para criar o efeito "infinito"
+    const infiniteLinks = [...links, ...links];
+
     return (
-        <section className="relative max-w-7xl mx-auto px-6 mt-16 mb-16 pt-4 pb-4">
-        <h2 className="text-2xl font-semibold mb-6">Links Rápidos</h2>
+        <section className="relative max-w-[70%] mx-auto overflow-hidden bg-transparent py-8">
+        <h2 className="text-2xl font-semibold text-center mb-8">Acessos Rápidos 🔗</h2>
 
         {/* Botões laterais */}
         <button
-            onClick={() => scroll("left")}
-            className="absolute left-0 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md hover:bg-gray-700 z-10"
-        >
+            onClick={() => handleManualScroll("left")}
+            className="absolute left-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md hover:bg-gray-700 z-10"
+            >
             <ChevronLeft size={24} />
-        </button>
+            </button>
 
-        <button
-            onClick={() => scroll("right")}
-            className="absolute right-0 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md hover:bg-gray-700 z-10"
-        >
+            <button
+            onClick={() => handleManualScroll("right")}
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md hover:bg-gray-700 z-10"
+            >
             <ChevronRight size={24} />
         </button>
-
-        {/* Carrossel */}
+        {/* Carrossel infinito */}
         <div
             ref={carouselRef}
-            className="flex overflow-x-auto gap-6 scroll-smooth no-scrollbar pb-8"
+            className="flex gap-6 animate-scroll-slow w-max"
         >
-            {links.map((link, index) => (
+            {infiniteLinks.map((link, index) => (
             <a
                 key={index}
                 href={link.url}
@@ -91,7 +120,7 @@ export default function LinksCarousel() {
                 rel="noopener noreferrer"
                 className={`min-w-[250px] bg-white dark:bg-gray-800 rounded-xl p-5 border-2 ${link.color} shadow-md hover:scale-105 hover:shadow-lg transition-all duration-300 flex-shrink-0`}
             >
-                <h3 className="text-lg font-bold mb-2">{link.title}</h3>
+                <h3 className="text-lg font-bold mb-2 text-black dark:text-[#CDFF00]">{link.title}</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-300">
                 {link.description}
                 </p>

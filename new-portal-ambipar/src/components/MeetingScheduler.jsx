@@ -9,11 +9,11 @@ export default function MeetingScheduler() {
         },
         {
         name: "Sala de Reunião Produção",
-        url: "https://cal.com/ambiparlimeira/sala-ti",
+        url: "https://cal.com/ti-magma-owzmwe/15min",
         },
         {
         name: "Sala de Reunião Andradas",
-        url: "https://cal.com/ambiparlimeira/sala-diretoria",
+        url: "https://cal.com/andradasti/sala-de-reuniao-andradas",
         },
     ];
     
@@ -29,7 +29,7 @@ export default function MeetingScheduler() {
 
 
     return (
-        <section className="w-[50%] md:w-[70%] mx-auto mt-12 mb-16">
+        <section id="reunioes" className="w-[50%] md:w-[70%] mx-auto mt-12 mb-16">
             <h2 className="text-4xl font-semibold text-center mb-6 text-gray-900 dark:text-gray-100">
                 🗓️ Agendamento Salas de Reuniões
             </h2>

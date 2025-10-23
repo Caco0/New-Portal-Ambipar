@@ -90,7 +90,7 @@ export default function LinksCarousel() {
     const infiniteLinks = [...links, ...links];
 
     return (
-        <section className="relative max-w-[70%] mx-auto overflow-hidden bg-transparent py-8">
+        <section id="acessos-rapidos" className="relative max-w-[70%] mx-auto overflow-hidden bg-transparent py-8">
         <h2 className="text-2xl font-semibold text-center mb-8">Acessos Rápidos 🔗</h2>
 
         {/* Botões laterais */}

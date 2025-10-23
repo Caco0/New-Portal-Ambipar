@@ -23,6 +23,7 @@ export default function Header() {
             <nav className="hidden md:flex space-x-6 text-[#B2CC21] dark:text-[#CDFF00]">
             <Link
                 to="/"
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 className="text-black dark:text-[#CDFF00] hover:text-[#B2CC21] dark:hover:text-white transition-colors"
             >
                 Home

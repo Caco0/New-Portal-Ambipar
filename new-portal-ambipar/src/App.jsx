@@ -2,11 +2,15 @@ import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 
 import Header from "./components/Header";
+import WorkflowList from "./components/WorkflowList";
 import LinksCarousel from "./components/LinksCarousel";
 import MeetingScheduler from "./components/MeetingScheduler";
 import ScrollToTop from "./components/ScrollToTop";
 import NoticiasList from "./components/NoticiasList";
 import NoticiaDetalhe from "./components/NoticiaDetalhe";
+import ListagemGeral from "./pages/Workflow/ListagemGeral";
+import DetalheGeral from "./pages/Workflow/DetalheGeral";
+
 
 import "./index.css";
 
@@ -21,6 +25,10 @@ function AppContent() {
       if (section) {
         section.scrollIntoView({ behavior: "smooth" });
       }
+    }
+    // Se for apenas a home "/", volta para o topo
+    else if (location.pathname === "/") {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, [location]);
 
@@ -45,74 +53,15 @@ function AppContent() {
                   </p>
                 </section>
 
-                {/* Workflow Processos */}
-                <section id="workflow" className="max-w-7xl mx-auto px-6 mb-12">
-                  <h2 className="text-2xl font-semibold mb-6">Workflow Processos</h2>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    {/* Coluna 1 */}
-                    <div className="space-y-4">
-                      <div className="p-4 bg-white dark:bg-gray-800 rounded-xl shadow hover:shadow-green-400/60 transition">
-                        <h4 className="font-bold text-[#B2CC21] dark:text-[#CDFF00]">
-                          💻 Sistema Sygecom
-                        </h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">
-                          Processos de geração, alteração e relatórios de boletos Sygecom.
-                        </p>
-                      </div>
-                      <div className="p-4 bg-white dark:bg-gray-800 rounded-xl shadow hover:shadow-green-400/60 transition">
-                        <h4 className="font-bold text-[#B2CC21] dark:text-[#CDFF00]">
-                          🎓 Treinamentos
-                        </h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">
-                          Treinamentos Sistema, Pacote Office, e Teams.
-                        </p>
-                      </div>
-                      <div className="p-4 bg-white dark:bg-gray-800 rounded-xl shadow hover:shadow-green-400/60 transition">
-                        <h4 className="font-bold text-[#B2CC21] dark:text-[#CDFF00]">
-                          📰 Formulários de Reembolso
-                        </h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">
-                          Preenchimento de formulários de reembolso.
-                        </p>
-                      </div>
-                      <div className="p-4 bg-white dark:bg-gray-800 rounded-xl shadow hover:shadow-green-400/60 transition">
-                        <h4 className="font-bold text-[#B2CC21] dark:text-[#CDFF00]">
-                          🚙 Agendamento de Veículos
-                        </h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">
-                          Agendamento de uso dos veículos em comum.
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Coluna 2 */}
-                    <div className="space-y-4">
-                      <div className="p-4 bg-white dark:bg-gray-800 rounded-xl shadow hover:shadow-green-400/60 transition">
-                        <h4 className="font-bold text-[#B2CC21] dark:text-[#CDFF00]">
-                          👨‍💻 Manuais de TI
-                        </h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">
-                          Manuais de configuração básica de TI.
-                        </p>
-                      </div>
-                      <div className="p-4 bg-white dark:bg-gray-800 rounded-xl shadow hover:shadow-green-400/60 transition">
-                        <h4 className="font-bold text-[#B2CC21] dark:text-[#CDFF00]">
-                          🌳 Manuais de Implementação
-                        </h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">
-                          Manuais de configuração básica de Implementação.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </section>
+                {/* Workflow Processos (dinâmico via Strapi) */}
+                <WorkflowList />
 
                 {/* Carrossel de Links */}
                 <LinksCarousel />
 
                 {/* Agendamento de reuniões */}
                 <MeetingScheduler />
+
               </>
             }
           />
@@ -120,6 +69,9 @@ function AppContent() {
           {/* Rotas de notícias */}
           <Route path="/noticias" element={<NoticiasList />} />
           <Route path="/noticias/:id" element={<NoticiaDetalhe />} />
+          {/* 🔹 Rotas genéricas de Workflow */}
+          <Route path="/workflow/:categoria" element={<ListagemGeral />} />
+          <Route path="/workflow/:categoria/:id" element={<DetalheGeral />} />
         </Routes>
       </main>
     </div>

@@ -12,6 +12,15 @@ dist
 dist-ssr
 *.local
 
+# Ignorar backend Strapi
+ambipar-strapi/.tmp
+ambipar-strapi/.cache
+ambipar-strapi/node_modules
+ambipar-strapi/build
+ambipar-strapi/dist
+ambipar-strapi/.env
+
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

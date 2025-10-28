@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "card_detalhes",
+  "info": {
+    "singularName": "card-detalhe",
+    "pluralName": "card-detalhes",
+    "displayName": "CardDetalhe"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "titulo": {
+      "type": "string"
+    },
+    "descricao_detalhada": {
+      "type": "text"
+    },
+    "imagem_detalhe": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "arquivo_pdf": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "card": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::card.card"
+    }
+  }
+}

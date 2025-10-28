@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "workflows_api",
+  "info": {
+    "singularName": "workflow-api",
+    "pluralName": "workflows-api",
+    "displayName": "Workflow"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
+    },
+    "cards": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::card.card"
+    }
+  }
+}

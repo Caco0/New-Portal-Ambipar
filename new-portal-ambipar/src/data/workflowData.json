@@ -9,11 +9,19 @@
         "cards": [
             {
             "id": 1,
-            "titulo": "Recebimento / Classificação",
-            "description": "Controle e gestão do recebimento e classificação de materiais.",
+            "titulo": "Procedimento Devolução de Materiais",
+            "description": 
+            "Estabelecer critérios e etapas para a identificação, registro, segregação e devolução de matéria-prima recebida de fornecedores que esteja fora das especificações técnicas exigidas.",
                 "detalhe": {
-            "descricao_detalhada": "O processo de Recebimento e Classificação é responsável por garantir que todos os materiais que entram sejam devidamente registrados, conferidos e categorizados conforme o tipo e origem.",
-            "imagem_detalhe": "/public/sucata.jpg",
+            "descricao_detalhada": [
+                "O procedimento de devolução de materiais tem como objetivo estabelecer critérios e etapas para a identificação, registro, segregação e devolução de matérias-primas recebidas de fornecedores que estejam fora das especificações técnicas exigidas. Ele se aplica a todas as matérias-primas provenientes de fornecedores externos que apresentem não conformidades.",
+                "O setor de Recebimento é responsável por realizar a inspeção visual e documental no momento da chegada do material, executar a inspeção técnica, emitir o Relato de Não Conformidade (RNC) quando necessário e segregar o material não conforme. O setor de Compras deve comunicar o fornecedor, negociar a devolução, reposição ou abatimento e coordenar a logística de devolução. A Diretoria é responsável por aprovar a devolução e o setor Fiscal deve emitir a nota fiscal de devolução, registrando o número do RNC.",
+                "O procedimento inicia-se com o recebimento e a inspeção inicial, onde é feita a conferência da nota fiscal, da quantidade e uma inspeção visual básica. Caso haja suspeita de não conformidade, o material é encaminhado à área de material não conforme e o setor comercial é informado. Na inspeção técnica, o material é avaliado quanto à qualidade e classificado como aprovado, aprovado com ressalvas ou rejeitado. Se rejeitado, deve-se emitir o RNC, fotografar e documentar a não conformidade e comunicar o setor de Compras.",
+                "O material não conforme deve ser identificado com etiqueta específica, armazenado em uma área segregada chamada “Área de Quarentena” e impedido de ser utilizado na produção. Em seguida, o setor de Compras deve comunicar o fornecedor, enviando cópia do RNC e evidências fotográficas, negociando a devolução, reposição ou abatimento em um prazo máximo de trinta dias após a identificação da não conformidade.",
+                "Após a autorização do fornecedor, o setor Fiscal emite a nota fiscal de devolução contendo o motivo e o número do RNC. O envio do material é acompanhado pela Logística, e todos os comprovantes e registros são arquivados.",
+                "Anexos do procedimento incluem o formulário de Não Conformidade e o fluxograma do processo. O documento deve ser revisado periodicamente e divulgado a todos os setores envolvidos, garantindo que o processo continue atualizado e eficiente."
+            ],
+            "imagem_detalhe": "/public/Diagrama.svg",
             "arquivo_pdf": "/public/01_PROCEDIMENTO DEVOLUÇÃO.pdf"
                 }
             },

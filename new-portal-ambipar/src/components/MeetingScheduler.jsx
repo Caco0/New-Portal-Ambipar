@@ -29,7 +29,7 @@ export default function MeetingScheduler() {
 
 
     return (
-        <section id="reunioes" className="w-[50%] md:w-[70%] mx-auto mt-12 mb-16">
+        <section id="reunioes" className="w-[50%] md:w-[70%] mx-auto mt-12 mb-16" tabIndex={-1}>
             <h2 className="text-4xl font-semibold text-center mb-6 text-gray-900 dark:text-gray-100">
                 🗓️ Agendamento Salas de Reuniões
             </h2>
@@ -58,6 +58,7 @@ export default function MeetingScheduler() {
                     height="700"
                     frameBorder="0"
                     className="w-full rounded-3xl"
+                    tabIndex={-1}
                     title={`Agendamento - ${rooms[currentRoom].name}`}
                 ></iframe>
             </div>

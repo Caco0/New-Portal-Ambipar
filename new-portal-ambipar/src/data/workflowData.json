@@ -1,0 +1,67 @@
+{
+    "workflow": [
+        {
+        "id": 1,
+        "title": "Processos",
+        "description": "Etapas e fluxos operacionais da empresa.",
+        "icon": "⚙️",
+        "slug": "processos",
+        "cards": [
+            {
+            "id": 1,
+            "titulo": "Recebimento / Classificação",
+            "description": "Controle e gestão do recebimento e classificação de materiais.",
+                "detalhe": {
+            "descricao_detalhada": "O processo de Recebimento e Classificação é responsável por garantir que todos os materiais que entram sejam devidamente registrados, conferidos e categorizados conforme o tipo e origem.",
+            "imagem_detalhe": "/public/sucata.jpg",
+            "arquivo_pdf": "/public/01_PROCEDIMENTO DEVOLUÇÃO.pdf"
+                }
+            },
+            {
+            "id": 2,
+            "titulo": "Vendas",
+            "description": "Gestão comercial e acompanhamento de pedidos de clientes."
+            },
+            {
+            "id": 3,
+            "titulo": "Financeiro",
+            "description": "Controle de contas, fluxo de caixa e relatórios financeiros."
+            },
+            {
+            "id": 4,
+            "titulo": "Compras Diretas",
+            "description": "Aquisições diretas de materiais e serviços essenciais."
+            },
+            {
+            "id": 5,
+            "titulo": "Compras Indiretas",
+            "description": "Processos de compras de suporte e materiais não produtivos."
+            },
+            {
+            "id": 6,
+            "titulo": "Logística",
+            "description": "Gerenciamento de transporte, armazenamento e distribuição."
+            }
+        ]
+        },
+        {
+        "id": 2,
+        "title": "Treinamentos",
+        "description": "Capacitações internas e vídeos educativos.",
+        "icon": "🎓",
+        "slug": "treinamentos",
+        "cards": [
+            {
+            "id": 1,
+            "titulo": "Treinamento de Segurança",
+            "description": "Uso correto de EPIs e práticas seguras no ambiente de trabalho."
+            },
+            {
+            "id": 2,
+            "titulo": "Treinamento de Sustentabilidade",
+            "description": "Boas práticas ambientais e políticas de descarte responsável."
+            }
+        ]
+        }
+    ]
+}

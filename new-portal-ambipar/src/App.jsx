@@ -5,12 +5,11 @@ import Header from "./components/Header";
 import WorkflowList from "./components/WorkflowList";
 import LinksCarousel from "./components/LinksCarousel";
 import MeetingScheduler from "./components/MeetingScheduler";
-import ScrollToTop from "./components/ScrollToTop";
+import ForceTopOnMount from "./components/ForceTopOnMount";
 import NoticiasList from "./components/NoticiasList";
 import NoticiaDetalhe from "./components/NoticiaDetalhe";
 import ListagemGeral from "./pages/Workflow/ListagemGeral";
 import DetalheGeral from "./pages/Workflow/DetalheGeral";
-
 
 import "./index.css";
 
@@ -18,7 +17,7 @@ import "./index.css";
 function AppContent() {
   const location = useLocation();
 
-  // Faz o scroll suave até o ID (#workflow, #acessos-rapidos etc.)
+   // Faz o scroll suave até o ID (#workflow, #acessos-rapidos etc.)
   useEffect(() => {
     if (location.hash) {
       const section = document.querySelector(location.hash);
@@ -28,7 +27,7 @@ function AppContent() {
     }
     // Se for apenas a home "/", volta para o topo
     else if (location.pathname === "/") {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, [location]);
 
@@ -36,7 +35,6 @@ function AppContent() {
     <div className="min-h-screen w-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors overflow-x-hidden">
       {/* Header fixo */}
       <Header />
-
       {/* Conteúdo principal */}
       <main id="home" className="pt-24 w-full min-h-screen bg-gray-50 dark:bg-gray-900">
         <Routes>
@@ -52,20 +50,15 @@ function AppContent() {
                     Nosso compromisso com a sustentabilidade em ação.
                   </p>
                 </section>
-
                 {/* Workflow Processos (dinâmico via Strapi) */}
                 <WorkflowList />
-
                 {/* Carrossel de Links */}
                 <LinksCarousel />
-
                 {/* Agendamento de reuniões */}
                 <MeetingScheduler />
-
               </>
             }
           />
-
           {/* Rotas de notícias */}
           <Route path="/noticias" element={<NoticiasList />} />
           <Route path="/noticias/:id" element={<NoticiaDetalhe />} />
@@ -81,7 +74,7 @@ function AppContent() {
 function App() {
   return (
     <Router>
-      <ScrollToTop />
+      <ForceTopOnMount />
       <AppContent />
     </Router>
   );

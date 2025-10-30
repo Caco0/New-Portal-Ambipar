@@ -30,6 +30,17 @@
         "videos",
         "audios"
       ]
+    },
+    "card_detalhe": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::card-detalhe.card-detalhe"
+    },
+    "workflow": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::workflow-api.workflow-api",
+      "inversedBy": "cards"
     }
   }
 }

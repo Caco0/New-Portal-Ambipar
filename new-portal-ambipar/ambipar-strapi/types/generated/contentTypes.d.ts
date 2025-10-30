@@ -477,6 +477,10 @@ export interface ApiCardCard extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    card_detalhe: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::card-detalhe.card-detalhe'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -491,6 +495,10 @@ export interface ApiCardCard extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    workflow: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::workflow-api.workflow-api'
+    >;
   };
 }
 

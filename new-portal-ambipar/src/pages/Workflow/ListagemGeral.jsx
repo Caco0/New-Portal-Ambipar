@@ -30,7 +30,7 @@ export default function ListagemGeral() {
                 to={`/workflow/${categoria}/${card.id}`}
                 className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow hover:shadow-green-400/60 transition-all"
             >
-                <h3 className="text-xl font-semibold">{card.titulo}</h3>
+                <h3 className="text-xl text-[#B2CC21] dark:text-[#CDFF00] font-semibold">{card.titulo}</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">{card.description}</p>
             </Link>
             ))}

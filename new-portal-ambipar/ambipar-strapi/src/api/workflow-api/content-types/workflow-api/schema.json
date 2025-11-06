@@ -9,26 +9,18 @@
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {},
   "attributes": {
-    "title": {
-      "type": "string"
-    },
-    "description": {
-      "type": "text"
-    },
-    "icon": {
-      "type": "string"
-    },
-    "slug": {
-      "type": "uid",
-      "targetField": "title"
-    },
-    "cards": {
+    "title": { "type": "string" },
+    "description": { "type": "blocks" },
+    "slug": { "type": "uid", "targetField": "title" },
+    "icon": { "type": "string" },
+    "card_lists": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::card.card",
+      "target": "api::card-list.card-list",
       "mappedBy": "workflow"
     }
   }
 }
+
+

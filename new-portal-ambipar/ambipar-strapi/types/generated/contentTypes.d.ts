@@ -433,25 +433,24 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiCardDetalheCardDetalhe extends Struct.CollectionTypeSchema {
   collectionName: 'card_detalhes';
   info: {
-    displayName: 'CardDetalhe';
+    displayName: 'Card detalhe';
     pluralName: 'card-detalhes';
     singularName: 'card-detalhe';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
-    arquivo_pdf: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios'
+    arquivo_pdf: Schema.Attribute.Media<undefined, true>;
+    card_list: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::card-list.card-list'
     >;
-    card: Schema.Attribute.Relation<'oneToOne', 'api::card.card'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    descricao_detalhada: Schema.Attribute.Text;
-    imagem_detalhe: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios'
-    >;
+    descricao_detalhada: Schema.Attribute.Blocks;
+    imagem_detalhe: Schema.Attribute.Media;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -459,37 +458,39 @@ export interface ApiCardDetalheCardDetalhe extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    titulo: Schema.Attribute.String;
+    title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
   };
 }
 
-export interface ApiCardCard extends Struct.CollectionTypeSchema {
-  collectionName: 'cards';
+export interface ApiCardListCardList extends Struct.CollectionTypeSchema {
+  collectionName: 'card_lists';
   info: {
-    displayName: 'card';
-    pluralName: 'cards';
-    singularName: 'card';
+    displayName: 'Card List';
+    pluralName: 'card-lists';
+    singularName: 'card-list';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    card_detalhe: Schema.Attribute.Relation<
-      'oneToOne',
+    card_detalhes: Schema.Attribute.Relation<
+      'oneToMany',
       'api::card-detalhe.card-detalhe'
     >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
-    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    description: Schema.Attribute.Blocks;
+    icon: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::card.card'> &
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::card-list.card-list'
+    > &
       Schema.Attribute.Private;
-    processos: Schema.Attribute.UID<'titulo'>;
     publishedAt: Schema.Attribute.DateTime;
     titulo: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -513,11 +514,14 @@ export interface ApiWorkflowApiWorkflowApi extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    cards: Schema.Attribute.Relation<'oneToMany', 'api::card.card'>;
+    card_lists: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::card-list.card-list'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
+    description: Schema.Attribute.Blocks;
     icon: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -1045,7 +1049,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::card-detalhe.card-detalhe': ApiCardDetalheCardDetalhe;
-      'api::card.card': ApiCardCard;
+      'api::card-list.card-list': ApiCardListCardList;
       'api::workflow-api.workflow-api': ApiWorkflowApiWorkflowApi;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

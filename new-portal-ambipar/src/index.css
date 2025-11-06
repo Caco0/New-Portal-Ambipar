@@ -95,3 +95,12 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+.truncate-link {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+  
+}

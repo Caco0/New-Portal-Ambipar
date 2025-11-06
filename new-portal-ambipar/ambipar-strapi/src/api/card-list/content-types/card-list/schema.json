@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "card_lists",
+  "info": {
+    "singularName": "card-list",
+    "pluralName": "card-lists",
+    "displayName": "Card List"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "titulo": { "type": "string" },
+    "icon": { "type": "string" },
+    "description": { "type": "blocks" },
+
+    "workflow": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::workflow-api.workflow-api",
+      "inversedBy": "card_lists"
+    },
+
+    "card_detalhes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::card-detalhe.card-detalhe",
+      "mappedBy": "card_list"
+    }
+  }
+}
+
+

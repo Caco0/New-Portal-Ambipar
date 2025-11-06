@@ -4,43 +4,19 @@
   "info": {
     "singularName": "card-detalhe",
     "pluralName": "card-detalhes",
-    "displayName": "CardDetalhe"
+    "displayName": "Card detalhe"
   },
-  "options": {
-    "draftAndPublish": true
-  },
-  "pluginOptions": {},
   "attributes": {
-    "titulo": {
-      "type": "string"
-    },
-    "descricao_detalhada": {
-      "type": "text"
-    },
-    "imagem_detalhe": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
-    "arquivo_pdf": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
-    "card": {
+    "title": { "type": "string" },
+    "descricao_detalhada": { "type": "blocks" },
+    "imagem_detalhe": { "type": "media", "multiple": false },
+    "arquivo_pdf": { "type": "media", "multiple": true },
+    "card_list": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::card.card"
+      "relation": "manyToOne",
+      "target": "api::card-list.card-list",
+      "inversedBy": "card_detalhes"
     }
   }
 }
+

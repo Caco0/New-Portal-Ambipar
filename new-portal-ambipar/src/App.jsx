@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import Header from "./components/Header";
 import WorkflowList from "./components/WorkflowList";
 import LinksCarousel from "./components/LinksCarousel";
+import TiLinks from "./components/TiLinks";
+import FinanceiroLinks from "./components/FinanceiroLinks";
 import MeetingScheduler from "./components/MeetingScheduler";
 import ForceTopOnMount from "./components/ForceTopOnMount";
 import NoticiasList from "./components/NoticiasList";
@@ -62,6 +64,8 @@ function AppContent() {
           {/* Rotas de notícias */}
           <Route path="/noticias" element={<NoticiasList />} />
           <Route path="/noticias/:id" element={<NoticiaDetalhe />} />
+          <Route path="/tiLinks" element={<TiLinks />} />
+          <Route path="/financeiroLinks" element={<FinanceiroLinks />} />
           {/* 🔹 Rotas genéricas de Workflow */}
           <Route path="/workflow/:categoria" element={<ListagemGeral />} />
           <Route path="/workflow/:categoria/:id" element={<DetalheGeral />} />

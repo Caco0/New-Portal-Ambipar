@@ -503,6 +503,41 @@ export interface ApiCardListCardList extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiNoticiaNoticia extends Struct.CollectionTypeSchema {
+  collectionName: 'noticias';
+  info: {
+    displayName: 'noticia';
+    pluralName: 'noticias';
+    singularName: 'noticia';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    autor: Schema.Attribute.String & Schema.Attribute.Required;
+    conteudo_completo: Schema.Attribute.Blocks & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    descricao_curta: Schema.Attribute.String;
+    imagem_capa: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::noticia.noticia'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'titulo'>;
+    titulo: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiWorkflowApiWorkflowApi extends Struct.CollectionTypeSchema {
   collectionName: 'workflows_api';
   info: {
@@ -1050,6 +1085,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::card-detalhe.card-detalhe': ApiCardDetalheCardDetalhe;
       'api::card-list.card-list': ApiCardListCardList;
+      'api::noticia.noticia': ApiNoticiaNoticia;
       'api::workflow-api.workflow-api': ApiWorkflowApiWorkflowApi;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

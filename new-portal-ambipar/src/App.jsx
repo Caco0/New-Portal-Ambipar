@@ -8,8 +8,8 @@ import TiLinks from "./components/TiLinks";
 import FinanceiroLinks from "./components/FinanceiroLinks";
 import MeetingScheduler from "./components/MeetingScheduler";
 import ForceTopOnMount from "./components/ForceTopOnMount";
-import NoticiasList from "./components/NoticiasList";
-import NoticiaDetalhe from "./components/NoticiaDetalhe";
+import NoticiasList from "./pages/Noticias/NoticiasList";
+import NoticiaDetalhe from "./pages/Noticias/NoticiaDetalhe";
 import ListagemGeral from "./pages/Workflow/ListagemGeral";
 import DetalheGeral from "./pages/Workflow/DetalheGeral";
 
@@ -61,14 +61,19 @@ function AppContent() {
               </>
             }
           />
-          {/* Rotas de notícias */}
+          {/* Notícias */}
           <Route path="/noticias" element={<NoticiasList />} />
-          <Route path="/noticias/:id" element={<NoticiaDetalhe />} />
+          <Route path="/noticias/:slug" element={<NoticiaDetalhe />} />
+
+
+          {/* TI Links / Financeiro */}
           <Route path="/tiLinks" element={<TiLinks />} />
           <Route path="/financeiroLinks" element={<FinanceiroLinks />} />
-          {/* 🔹 Rotas genéricas de Workflow */}
+
+          {/* Workflow */}
           <Route path="/workflow/:categoria" element={<ListagemGeral />} />
           <Route path="/workflow/:categoria/:id" element={<DetalheGeral />} />
+
         </Routes>
       </main>
     </div>

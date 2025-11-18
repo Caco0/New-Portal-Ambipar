@@ -13,17 +13,17 @@ export default function MeetingScheduler() {
         {
         name: "Sala de Reunião Recepção",
         url: "https://cal.com/ambiparlimeira/sala-de-reuniao-recepcao",
-        image: "/public/reunião 1.webp",
+        image: `${import.meta.env.BASE_URL}reuniao1.webp`,
         },
         {
         name: "Sala de Reunião Produção",
         url: "https://cal.com/ti-magma-owzmwe/15min",
-        image: "/public/reunião 2.jpg",
+        image: `${import.meta.env.BASE_URL}reuniao2.jpg`,
         },
         {
         name: "Sala de Reunião Andradas",
         url: "https://cal.com/andradasti/sala-de-reuniao-andradas",
-        image: "/public/reunião 3.jpg",
+        image: `${import.meta.env.BASE_URL}reuniao3.jpg`,
         },
     ];
 

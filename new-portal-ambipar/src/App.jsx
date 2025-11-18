@@ -82,7 +82,7 @@ function AppContent() {
 
 function App() {
   return (
-    <Router>
+    <Router basename="/Portal">
       <ForceTopOnMount />
       <AppContent />
     </Router>

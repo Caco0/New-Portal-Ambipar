@@ -68,6 +68,63 @@ button:focus-visible {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+
+.animate-scroll-slow {
+  display: flex;
+  animation: scroll-slow 30s linear infinite;
+  width: max-content;
+}
+
+.truncate-link {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+  
+}
+.prose-invert a {
+  color: #b2cc21;
+  text-decoration: underline;
+}
+
+.prose-invert strong {
+  color: #cdff00;
+}
+
+.prose-invert h1, 
+.prose-invert h2, 
+.prose-invert h3 {
+  color: #cdff00;
+}
+/* Centraliza toda a área de texto vinda do Strapi BlocksRenderer */
+.descricao-render {
+  text-align: center;
+}
+
+.descricao-render p,
+.descricao-render ul,
+.descricao-render ol,
+.descricao-render h1,
+.descricao-render h2,
+.descricao-render h3,
+.descricao-render h4,
+.descricao-render h5,
+.descricao-render h6 {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Centraliza marcadores das listas */
+.descricao-render ul,
+.descricao-render ol {
+  display: inline-block;
+  text-align: left; /* mantém alinhamento interno das listas */
+}
+
 @keyframes scroll-slow {
   from {
     transform: translateX(0);
@@ -76,13 +133,6 @@ button:focus-visible {
     transform: translateX(-50%);
   }
 }
-
-.animate-scroll-slow {
-  display: flex;
-  animation: scroll-slow 30s linear infinite;
-  width: max-content;
-}
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -95,12 +145,17 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
-.truncate-link {
-  display: inline-block;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  vertical-align: middle;
-  
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out forwards;
 }

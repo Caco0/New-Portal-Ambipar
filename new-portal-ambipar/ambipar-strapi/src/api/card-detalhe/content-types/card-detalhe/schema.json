@@ -6,11 +6,33 @@
     "pluralName": "card-detalhes",
     "displayName": "Card detalhe"
   },
+  "options": {
+    "draftAndPublish": true,
+    "configurable": true
+  },
   "attributes": {
-    "title": { "type": "string" },
-    "descricao_detalhada": { "type": "blocks" },
-    "imagem_detalhe": { "type": "media", "multiple": false },
-    "arquivo_pdf": { "type": "media", "multiple": true },
+    "title": { 
+      "type": "string" 
+    },
+
+    "descricao_detalhada": { 
+      "type": "blocks" 
+    },
+
+    "imagem_detalhe": { 
+      "type": "media", 
+      "multiple": false 
+    },
+
+    "arquivo_pdf": { 
+      "type": "media", 
+      "multiple": true 
+    },
+
+    "videoUrl": {
+      "type": "string"
+    },
+
     "card_list": {
       "type": "relation",
       "relation": "manyToOne",
@@ -19,4 +41,3 @@
     }
   }
 }
-

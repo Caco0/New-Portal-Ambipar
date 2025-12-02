@@ -39,10 +39,11 @@ export default function NoticiasList() {
             <div className="rounded-2xl overflow-hidden shadow-xl hover:shadow-green-400/40 transition-all duration-300">
                 {destaque.imagem_capa?.url && (
                 <img
-                    src={`http://localhost:1337${destaque.imagem_capa.formats?.large?.url || destaque.imagem_capa.url}`}
+                    src={`${import.meta.env.VITE_STRAPI_URL}${destaque.imagem_capa.formats?.large?.url || destaque.imagem_capa.url}`}
                     className="w-full max-h-[450px] object-cover"
                     alt={destaque.titulo}
                 />
+
                 )}
             </div>
 
@@ -67,10 +68,11 @@ export default function NoticiasList() {
                 >
                 {noticia.imagem_capa?.url && (
                     <img
-                    src={`http://localhost:1337${noticia.imagem_capa.formats?.small?.url || noticia.imagem_capa.url}`}
-                    className="w-28 h-28 object-cover flex-shrink-0"
-                    alt={noticia.titulo}
+                        src={`${import.meta.env.VITE_STRAPI_URL}${noticia.imagem_capa.formats?.small?.url || noticia.imagem_capa.url}`}
+                        className="w-28 h-28 object-cover flex-shrink-0"
+                        alt={noticia.titulo}
                     />
+
                 )}
 
                 <div className="p-3 flex flex-col justify-center">

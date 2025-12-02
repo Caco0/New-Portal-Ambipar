@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import WorkflowList from "./components/WorkflowList";
 import LinksCarousel from "./components/LinksCarousel";
 import TiLinks from "./components/TiLinks";
+import LogisticaLinks from "./components/LogisticaLinks";
 import FinanceiroLinks from "./components/FinanceiroLinks";
 import MeetingScheduler from "./components/MeetingScheduler";
 import ForceTopOnMount from "./components/ForceTopOnMount";
@@ -66,8 +67,9 @@ function AppContent() {
           <Route path="/noticias/:slug" element={<NoticiaDetalhe />} />
 
 
-          {/* TI Links / Financeiro */}
+          {/* TI Links / Financeiro / Logistica */}
           <Route path="/tiLinks" element={<TiLinks />} />
+          <Route path="/logisticalinks" element={<LogisticaLinks />} />
           <Route path="/financeiroLinks" element={<FinanceiroLinks />} />
 
           {/* Workflow */}

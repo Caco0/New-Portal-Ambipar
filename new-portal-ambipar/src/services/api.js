@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://10.0.0.197:1337/api",
+    baseURL: import.meta.env.VITE_API_URL + "/api",
 });
 
+export const STRAPI_URL = "http://10.0.0.197:1337";
 export default api;

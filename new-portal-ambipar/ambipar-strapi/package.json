@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "description": "A Strapi application",
+  "overrides": {
+    "file-type": "18.7.0"
+  },
   "scripts": {
     "build": "strapi build",
     "console": "strapi console",
@@ -18,7 +21,9 @@
     "@strapi/plugin-cloud": "5.29.0",
     "@strapi/plugin-users-permissions": "5.29.0",
     "@strapi/strapi": "^5.31.0",
+    "@strapi/upload": "^5.31.0",
     "better-sqlite3": "11.3.0",
+    "file-type": "18.7.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",

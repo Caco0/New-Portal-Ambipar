@@ -430,6 +430,68 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAgendamentoAgendamento extends Struct.CollectionTypeSchema {
+  collectionName: 'agendamentos';
+  info: {
+    description: 'Solicita\u00E7\u00E3o e controle de uso dos ve\u00EDculos';
+    displayName: 'Agendamentos';
+    pluralName: 'agendamentos';
+    singularName: 'agendamento';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    aprovador: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    data_agendada: Schema.Attribute.Date & Schema.Attribute.Required;
+    data_aprovacao: Schema.Attribute.DateTime;
+    data_solicitacao: Schema.Attribute.DateTime &
+      Schema.Attribute.DefaultTo<'now'>;
+    destino: Schema.Attribute.String & Schema.Attribute.Required;
+    finalidade: Schema.Attribute.RichText;
+    hora_fim: Schema.Attribute.Time & Schema.Attribute.Required;
+    hora_inicio: Schema.Attribute.Time & Schema.Attribute.Required;
+    imagens_ocorrencia: Schema.Attribute.Media<'images', true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::agendamento.agendamento'
+    > &
+      Schema.Attribute.Private;
+    nivel_combustivel_chegada: Schema.Attribute.Enumeration<
+      ['vazio', 'um_quarto', 'meio', 'tres_quartos', 'cheio']
+    >;
+    nivel_combustivel_saida: Schema.Attribute.Enumeration<
+      ['vazio', 'um_quarto', 'meio', 'tres_quartos', 'cheio']
+    >;
+    numero_cnh: Schema.Attribute.String;
+    observacao_aprovacao: Schema.Attribute.Text;
+    ocorrencias: Schema.Attribute.RichText;
+    publishedAt: Schema.Attribute.DateTime;
+    solicitante: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    > &
+      Schema.Attribute.Required;
+    status: Schema.Attribute.Enumeration<
+      ['pendente', 'aprovado', 'negado', 'concluido']
+    > &
+      Schema.Attribute.DefaultTo<'pendente'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    validade_cnh: Schema.Attribute.Date;
+    veiculo: Schema.Attribute.Relation<'manyToOne', 'api::veiculo.veiculo'> &
+      Schema.Attribute.Required;
+  };
+}
+
 export interface ApiCardDetalheCardDetalhe extends Struct.CollectionTypeSchema {
   collectionName: 'card_detalhes';
   info: {
@@ -438,7 +500,8 @@ export interface ApiCardDetalheCardDetalhe extends Struct.CollectionTypeSchema {
     singularName: 'card-detalhe';
   };
   options: {
-    draftAndPublish: false;
+    configurable: true;
+    draftAndPublish: true;
   };
   attributes: {
     arquivo_pdf: Schema.Attribute.Media<undefined, true>;
@@ -462,6 +525,7 @@ export interface ApiCardDetalheCardDetalhe extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    videoUrl: Schema.Attribute.String;
   };
 }
 
@@ -532,6 +596,50 @@ export interface ApiNoticiaNoticia extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'titulo'>;
     titulo: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiVeiculoVeiculo extends Struct.CollectionTypeSchema {
+  collectionName: 'veiculos';
+  info: {
+    description: 'Cadastro de ve\u00EDculos da frota';
+    displayName: 'Veiculos';
+    pluralName: 'veiculos';
+    singularName: 'veiculo';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    categoria: Schema.Attribute.Enumeration<
+      ['leve', 'carga', 'utilitario', 'moto', 'especial']
+    > &
+      Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    imagem: Schema.Attribute.Media<'images'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::veiculo.veiculo'
+    > &
+      Schema.Attribute.Private;
+    nome: Schema.Attribute.String & Schema.Attribute.Required;
+    observacoes: Schema.Attribute.RichText;
+    placa: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    publishedAt: Schema.Attribute.DateTime;
+    quilometragem: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    status: Schema.Attribute.Enumeration<
+      ['disponivel', 'manutencao', 'indisponivel']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'disponivel'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1083,9 +1191,11 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::agendamento.agendamento': ApiAgendamentoAgendamento;
       'api::card-detalhe.card-detalhe': ApiCardDetalheCardDetalhe;
       'api::card-list.card-list': ApiCardListCardList;
       'api::noticia.noticia': ApiNoticiaNoticia;
+      'api::veiculo.veiculo': ApiVeiculoVeiculo;
       'api::workflow-api.workflow-api': ApiWorkflowApiWorkflowApi;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

@@ -1,0 +1,73 @@
+{
+    "kind": "collectionType",
+    "collectionName": "agendamentos",
+    "info": {
+        "singularName": "agendamento",
+        "pluralName": "agendamentos",
+        "displayName": "Agendamentos",
+        "description": "Controle completo de uso dos veículos da frota Ambipar"
+    },
+    "options": {
+        "draftAndPublish": false
+    },
+    "attributes": {
+        "veiculo": {
+        "type": "relation",
+        "relation": "manyToOne",
+        "target": "api::veiculo.veiculo",
+        "required": true
+        },
+
+        "solicitante": {
+        "type": "relation",
+        "relation": "manyToOne",
+        "target": "plugin::users-permissions.user",
+        "required": true
+        },
+
+        "status": {
+        "type": "enumeration",
+        "enum": ["reservado", "em_uso", "concluido"],
+        "default": "reservado"
+        },
+
+        "destino": { "type": "string", "required": true },
+        "finalidade": { "type": "richtext" },
+
+        "data_agendada": { "type": "date", "required": true },
+        "hora_inicio": { "type": "time", "required": true },
+        "hora_fim": { "type": "time", "required": true },
+
+        "numero_cnh": { "type": "string" },
+        "validade_cnh": { "type": "date" },
+
+        "nivel_combustivel_saida": {
+        "type": "enumeration",
+        "enum": ["vazio", "um_quarto", "meio", "tres_quartos", "cheio"]
+        },
+
+        "quilometragem_inicial": {
+        "type": "integer"
+        },
+
+        "data_inicio_real": { "type": "date" },
+        "hora_inicio_real": { "type": "time" },
+
+        "quilometragem_final": { "type": "integer" },
+        "nivel_combustivel_chegada": {
+        "type": "enumeration",
+        "enum": ["vazio", "um_quarto", "meio", "tres_quartos", "cheio"]
+        },
+
+        "data_retorno": { "type": "date" },
+        "hora_chegada": { "type": "time" },
+
+        "ocorrencias": { "type": "richtext" },
+
+        "imagens_ocorrencia": {
+        "type": "media",
+        "multiple": true,
+        "allowedTypes": ["images"]
+        }
+    }
+}

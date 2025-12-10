@@ -1,0 +1,47 @@
+{
+    "kind": "collectionType",
+    "collectionName": "veiculos",
+    "info": {
+        "singularName": "veiculo",
+        "pluralName": "veiculos",
+        "displayName": "Veiculos",
+        "description": "Cadastro de veículos da frota"
+    },
+    "options": {
+        "draftAndPublish": false
+    },
+    "attributes": {
+        "nome": {
+        "type": "string",
+        "required": true
+        },
+        "placa": {
+        "type": "string",
+        "required": true,
+        "unique": true
+        },
+        "categoria": {
+        "type": "enumeration",
+        "enum": ["leve", "carga", "utilitario", "moto", "especial"],
+        "required": true
+        },
+        "imagem": {
+        "type": "media",
+        "multiple": false,
+        "allowedTypes": ["images"]
+        },
+        "status": {
+        "type": "enumeration",
+        "enum": ["disponivel", "manutencao", "indisponivel"],
+        "default": "disponivel",
+        "required": true
+        },
+        "quilometragem": {
+        "type": "integer",
+        "default": 0
+        },
+        "observacoes": {
+        "type": "richtext"
+        }
+    }
+}

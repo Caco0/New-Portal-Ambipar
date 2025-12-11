@@ -44,6 +44,14 @@ export default function ListagemGeral() {
                     </Link>
                 ))}
             </div>
+            <div className="text-center mt-10">
+                <Link
+                    to="/"
+                    className="hover:underline text-[#B2CC21] dark:text-[#CDFF00]"
+                >
+                    ← Voltar
+                </Link>
+            </div>
         </section>
     );
 }

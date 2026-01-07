@@ -19,10 +19,10 @@ export default function LinksCarousel() {
     };
 
     const links = [
-        { title: "🌐 Sistema Sygecom", url: "https://cloud5.sygecom.com.br/sagi_magma.html", color: "border-green-500", description: "Processos sistema Sygecom" },
         { title: "🙋‍♀️ Feedz", url: "https://app.feedz.com.br", color: "border-blue-500", description: "Comunidade Ambipar Limeira e Andradas" },
         { title: "🔧 Chamado TI", url: "http://10.0.0.251/glpi/front/central.php", color: "border-yellow-500", description: "Painel de chamados de TI" },
         { title: "🌐 Nosso Site", url: "https://fundicaomagma.com.br/", color: "border-purple-500", description: "Nossa página Web" },
+        { title: "🌐 Sistema Sygecom", url: "https://cloud.sygecom.com.br/sagi_magma.html", color: "border-green-500", description: "Processos sistema Sygecom" },
         { title: "🚚 Logística", url: "/logisticalinks", color: "border-pink-500", description: "Links de reatreamento de Logística." },
         { title: "💰 Financeiro", url: "/financeiroLinks", color: "border-green-500", description: "Links Financeiros." },
         { title: "📊 Dashboard", url: "#", color: "border-red-500", description: "Torre de Dados Ambipar (em construção)" },

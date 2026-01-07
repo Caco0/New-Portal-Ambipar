@@ -19,6 +19,7 @@ export default function LinksCarousel() {
     };
 
     const links = [
+        { title: "👨‍💻 TI Links", url: "/tiLinks", color: "border-yellow-500", description: "Links de serviços de TI" }, // <-- usa rota interna
         { title: "🙋‍♀️ Feedz", url: "https://app.feedz.com.br", color: "border-blue-500", description: "Comunidade Ambipar Limeira e Andradas" },
         { title: "🔧 Chamado TI", url: "http://10.0.0.251/glpi/front/central.php", color: "border-yellow-500", description: "Painel de chamados de TI" },
         { title: "🌐 Nosso Site", url: "https://fundicaomagma.com.br/", color: "border-purple-500", description: "Nossa página Web" },
@@ -27,8 +28,6 @@ export default function LinksCarousel() {
         { title: "💰 Financeiro", url: "/financeiroLinks", color: "border-green-500", description: "Links Financeiros." },
         { title: "📊 Dashboard", url: "#", color: "border-red-500", description: "Torre de Dados Ambipar (em construção)" },
         { title: "⏱ Registro de Ponto", url: "https://ezpoint.com.br/", color: "border-black", description: "Registro de ponto" },
-        { title: "🔁 Workflow Processos", url: "/workflow", color: "border-purple-500", description: "Capacitações e vídeos internos." },
-        { title: "👨‍💻 TI Links", url: "/tiLinks", color: "border-yellow-500", description: "Links de serviços de TI" }, // <-- usa rota interna
     ];
 
     const infiniteLinks = [...links, ...links];

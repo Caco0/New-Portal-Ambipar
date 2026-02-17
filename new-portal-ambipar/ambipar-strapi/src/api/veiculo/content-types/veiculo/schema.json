@@ -42,6 +42,12 @@
         },
         "observacoes": {
         "type": "richtext"
+        },
+        "agendamentos": {
+        "type": "relation",
+        "relation": "oneToMany",
+        "target": "api::agendamento.agendamento",
+        "mappedBy": "veiculo"
         }
     }
 }

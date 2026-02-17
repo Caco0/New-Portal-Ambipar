@@ -433,7 +433,7 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiAgendamentoAgendamento extends Struct.CollectionTypeSchema {
   collectionName: 'agendamentos';
   info: {
-    description: 'Solicita\u00E7\u00E3o e controle de uso dos ve\u00EDculos';
+    description: 'Controle completo de uso dos ve\u00EDculos da frota Ambipar';
     displayName: 'Agendamentos';
     pluralName: 'agendamentos';
     singularName: 'agendamento';
@@ -442,21 +442,18 @@ export interface ApiAgendamentoAgendamento extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
-    aprovador: Schema.Attribute.Relation<
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     data_agendada: Schema.Attribute.Date & Schema.Attribute.Required;
-    data_aprovacao: Schema.Attribute.DateTime;
-    data_solicitacao: Schema.Attribute.DateTime &
-      Schema.Attribute.DefaultTo<'now'>;
+    data_inicio_real: Schema.Attribute.Date;
+    data_retorno: Schema.Attribute.Date;
     destino: Schema.Attribute.String & Schema.Attribute.Required;
     finalidade: Schema.Attribute.RichText;
+    hora_chegada: Schema.Attribute.Time;
     hora_fim: Schema.Attribute.Time & Schema.Attribute.Required;
     hora_inicio: Schema.Attribute.Time & Schema.Attribute.Required;
+    hora_inicio_real: Schema.Attribute.Time;
     imagens_ocorrencia: Schema.Attribute.Media<'images', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -471,18 +468,17 @@ export interface ApiAgendamentoAgendamento extends Struct.CollectionTypeSchema {
       ['vazio', 'um_quarto', 'meio', 'tres_quartos', 'cheio']
     >;
     numero_cnh: Schema.Attribute.String;
-    observacao_aprovacao: Schema.Attribute.Text;
     ocorrencias: Schema.Attribute.RichText;
     publishedAt: Schema.Attribute.DateTime;
+    quilometragem_final: Schema.Attribute.Integer;
+    quilometragem_inicial: Schema.Attribute.Integer;
     solicitante: Schema.Attribute.Relation<
       'manyToOne',
       'plugin::users-permissions.user'
     > &
       Schema.Attribute.Required;
-    status: Schema.Attribute.Enumeration<
-      ['pendente', 'aprovado', 'negado', 'concluido']
-    > &
-      Schema.Attribute.DefaultTo<'pendente'>;
+    status: Schema.Attribute.Enumeration<['reservado', 'em_uso', 'concluido']> &
+      Schema.Attribute.DefaultTo<'reservado'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -614,6 +610,10 @@ export interface ApiVeiculoVeiculo extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    agendamentos: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::agendamento.agendamento'
+    >;
     categoria: Schema.Attribute.Enumeration<
       ['leve', 'carga', 'utilitario', 'moto', 'especial']
     > &

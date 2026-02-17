@@ -56,6 +56,13 @@ export default function Header() {
                 >
                     Notícias
                 </Link>
+
+                <Link
+                    to="/veiculos"
+                    className="text-black dark:text-[#CDFF00] hover:text-[#B2CC21] dark:hover:text-white transition-colors"
+                >
+                    Veículos
+                </Link>
             </nav>
 
             {/* Alternador de tema */}

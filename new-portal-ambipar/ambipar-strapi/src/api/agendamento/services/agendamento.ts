@@ -17,6 +17,11 @@ export default factories.createCoreService(
       if (!agendamento) {
         throw new Error("Agendamento não encontrado");
       }
+      if (agendamento.status !== "reservado") {
+        throw new Error(
+          `Agendamento não pode ser iniciado porque está com status '${agendamento.status}'`
+        );
+      }
       return agendamento;
     }
   })

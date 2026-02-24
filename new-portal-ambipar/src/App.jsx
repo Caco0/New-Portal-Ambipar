@@ -13,6 +13,7 @@ import NoticiasList from "./pages/Noticias/NoticiasList";
 import NoticiaDetalhe from "./pages/Noticias/NoticiaDetalhe";
 import ListagemGeral from "./pages/Workflow/ListagemGeral";
 import DetalheGeral from "./pages/Workflow/DetalheGeral";
+import VeiculosPortal from "./pages/Veiculos/VeiculosPortal";
 
 import "./index.css";
 
@@ -75,6 +76,9 @@ function AppContent() {
           {/* Workflow */}
           <Route path="/workflow/:categoria" element={<ListagemGeral />} />
           <Route path="/workflow/:categoria/:id" element={<DetalheGeral />} />
+
+          {/** Veículos */}
+          <Route path="/veiculos" element={<VeiculosPortal />} />
 
         </Routes>
       </main>

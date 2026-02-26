@@ -14,6 +14,7 @@ import NoticiaDetalhe from "./pages/Noticias/NoticiaDetalhe";
 import ListagemGeral from "./pages/Workflow/ListagemGeral";
 import DetalheGeral from "./pages/Workflow/DetalheGeral";
 import VeiculosPortal from "./pages/Veiculos/VeiculosPortal";
+import VeiculosLogin from "./pages/Veiculos/login";
 
 import "./index.css";
 
@@ -79,6 +80,7 @@ function AppContent() {
 
           {/** Veículos */}
           <Route path="/veiculos" element={<VeiculosPortal />} />
+          <Route path="/veiculos/login" element={<VeiculosLogin />} />
 
         </Routes>
       </main>

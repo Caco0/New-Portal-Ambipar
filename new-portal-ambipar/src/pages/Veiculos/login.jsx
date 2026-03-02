@@ -20,8 +20,29 @@ export default function VeiculosLogin() {
                         alt="Ambipar Logo Dark" 
                         className=" mx-auto items-center transition-all hidden dark:block" />
                         </div>
-                        <div className="w-96 h-96  space-y-6 rounded-r-lg bg-white/90 p-8 shadow-lg">
-                        teste b
+                        {/* Placeholder para o formulário de login */}
+                        <div className="w-96 h-96  space-y-6 rounded-r-lg bg-gray-900 dark:bg-[#CDFF00] p-8 shadow-lg">
+                            <h3 
+                            className="text-lg text-center font-semibold text-gray-400 dark:text-gray-400">
+                                Bem-vindo! Faça login para acessar o sistema de agendamento.
+                            </h3>
+                            {/* Formulário de login */}
+                            <form action="Login" className="space-y-4">
+                                <input 
+                                type="email" 
+                                placeholder="E-mail" 
+                                className="bg-gray-900 border-[#CDFF00] rounded-lg p-1 w-full m-2 p-1 m-auto"/>
+                                <input 
+                                type="password" 
+                                placeholder="senha" 
+                                className="bg-gray-900 border-[#CDFF00] rounded-lg p-1 w-full m-2 p-1 m-auto"/>
+                            </form>
+                            {/* BOTTOM 50vh */}
+                            <div className="w-full mx-auto">
+                                <div className="p-2 bg-[#CDFF00] dark:bg-gray-800 rounded-xl shadow hover:shadow-green-400/60 transition-all">
+                                <p className="text-center text-lg font-bold">Login</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

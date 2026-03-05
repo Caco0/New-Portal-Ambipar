@@ -5,7 +5,15 @@ export default ({ env }) => ({
         providerOptions: {
             // Em Strapi v5, 'sizeLimit' deve ficar FORA de providerOptions
         },
-        sizeLimit: 100000000, // 100 MB
+        sizeLimit: 10 * 1024 * 1024, // 10 MB
+
+        security: {
+            allowedTypes: [
+                'image/jpeg',
+                'image/png',
+                'image/webp'
+                ],
+            },
 
         baseUrl: 'http://10.0.0.197:1337/uploads',
 

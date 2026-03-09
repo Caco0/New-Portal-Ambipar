@@ -7,14 +7,6 @@ export default ({ env }) => ({
         },
         sizeLimit: 10 * 1024 * 1024, // 10 MB
 
-        security: {
-            allowedTypes: [
-                'image/jpeg',
-                'image/png',
-                'image/webp'
-                ],
-            },
-
         baseUrl: 'http://10.0.0.197:1337/uploads',
 
         mimeTypes: [

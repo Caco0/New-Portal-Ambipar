@@ -7,7 +7,7 @@ export default ({ env }) => ({
         },
         sizeLimit: 10 * 1024 * 1024, // 10 MB
 
-        baseUrl: 'http://10.0.0.197:1337/uploads',
+        baseUrl: env('UPLOAD_BASE_URL'),
 
         mimeTypes: [
             // IMAGENS

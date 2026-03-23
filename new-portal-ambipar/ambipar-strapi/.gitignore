@@ -32,6 +32,7 @@ $RECYCLE.BIN/
 *.msp
 
 
+
 ############################
 # Packages
 ############################
@@ -122,6 +123,9 @@ coverage
 ############################
 
 .env
+.env.development
+.env.production
+!.env.example
 license.txt
 exports
 .strapi

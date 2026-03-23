@@ -1,3 +1,9 @@
+# Env frontend
+.env
+.env.development
+.env.production
+!.env.example
+
 # Logs
 logs
 *.log
@@ -19,6 +25,9 @@ ambipar-strapi/node_modules
 ambipar-strapi/build
 ambipar-strapi/dist
 ambipar-strapi/.env
+ambipar-strapi/.env.development
+ambipar-strapi/.env.production
+!ambipar-strapi/.env.example
 
 
 # Editor directories and files

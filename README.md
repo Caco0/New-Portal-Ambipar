@@ -1,192 +1,99 @@
 # 🌱 EcoConnect — Portal Web Corporativo Sustentável
 
-> **"Juntos por um Planeta Mais Verde"**  
-> Portal web corporativo desenvolvido com React + Vite, inspirado em redes sociais e voltado à sustentabilidade, integração de ferramentas internas e gestão de conteúdo via Strapi CMS.
+Sistema web interno (intranet) desenvolvido para centralizar
+informações, processos e ferramentas corporativas.
 
----
+------------------------------------------------------------------------
 
-## 📘 **Visão Geral do Projeto**
+# 🧭 Visão Geral
 
-O **EcoConnect** é um portal corporativo voltado à comunicação interna, sustentabilidade e integração de ferramentas da empresa.  
-Hospedado em **servidor Apache (intranet)**, ele oferece:
+## Arquitetura
 
-- 🧭 Navegação moderna com menu hamburguer  
-- 🧱 Carrossel de links e ferramentas internas  
-- 📊 Integração com **Trello** para exibir quadros e projetos  
-- 🗓️ Sistema de agendamento de **Salas de Reunião** com calendário interativo  
-- 📰 Seção de **Notícias e Comunicados Internos** (gerenciados via **Strapi**)  
-- 🌗 Alternância entre **modo claro e escuro**  
-- 🔒 Gestão de conteúdo sem necessidade de editar o código-fonte  
+Frontend (React + Vite) ↓ API REST (Strapi v5) ↓ Banco de Dados (SQLite
+→ PostgreSQL futuro)
 
----
+## Ambiente
 
-## 🧩 **Arquitetura do Sistema**
+-   🌐 Intranet: http://10.0.0.197/Portal/
+-   ⚙️ Backend Strapi: http://10.0.0.197:1337
+-   🧪 Desenvolvimento local:
+    -   Frontend: http://localhost:5174
+    -   Strapi: http://localhost:1338
 
-```
-eco-connect/
-│
-├── frontend/            # Aplicação React (Vite)
-│   ├── src/
-│   │   ├── components/  # Componentes (Header, Carrossel, Cards, etc.)
-│   │   ├── pages/       # Páginas principais (Home, Notícias, Agenda, etc.)
-│   │   ├── hooks/       # Hooks personalizados (ex: modo escuro)
-│   │   └── services/    # Consumo de APIs (Strapi, Trello)
-│   └── public/
-│
-├── backend/             # Strapi CMS
-│   ├── api/
-│   │   ├── noticias/
-│   │   ├── links/
-│   │   └── salas/
-│   └── config/
-│
-├── .env                 # Variáveis de ambiente
-├── README.md
-└── apache-config/       # Arquivos de configuração do servidor
-```
+------------------------------------------------------------------------
 
----
+# 🧩 Módulos do Sistema
 
-## 🧰 **Tecnologias Utilizadas**
+## 🏠 Home
 
-### **Frontend**
-- ⚛️ React
-- ⚡ Vite
-- 🎨 TailwindCSS  
-- 🧱 Shadcn/UI (componentes estilizados)
-- 🔄 React Router DOM
-- 🧭 React Slick (carrossel)
-- 📅 React Big Calendar ou FullCalendar React
-- 🌗 Alternância de tema (light/dark mode)
-- 📡 Axios (requisições HTTP)
+-   Página inicial do portal
+-   Não consome API diretamente
 
-### **Backend / CMS**
-- ⚙️ Strapi
-- 🗃️ Banco de dados: SQLite (dev) ou PostgreSQL (produção)
-- 🔐 Autenticação JWT nativa do Strapi
-- 🌍 API REST/GraphQL
+## 🔗 Acessos Rápidos
 
-### **Integrações**
-- 📋 Trello API
-- 🗓️ Biblioteca de calendário para agendamentos
+-   Links para sistemas internos/externos
+-   Não consome API do Strapi
 
-### **Infraestrutura**
-- 🌐 Servidor Apache (intranet)
-- 🧾 Configuração .htaccess para rotas SPA
-- 🧩 Git + GitHub/GitLab (versionamento)
-- 🧰 Node.js / npm (ambiente de desenvolvimento)
+## ⚙️ Workflow Processos
 
----
+Content-types: - workflow-api - card-list - card-detalhe
 
-## 🚀 **Guia de Instalação**
+Endpoints: - GET /api/workflow-apis - GET /api/workflow-apis/:id - GET
+/api/card-lists - GET /api/card-lists/:id - GET /api/card-detalhes - GET
+/api/card-detalhes/:id
 
-### **1. Clonar o repositório**
-```bash
-git clone https://github.com/seuusuario/eco-connect.git
-cd eco-connect
-```
+Permissões: - find - findOne
 
-### **2. Instalar dependências do frontend**
-```bash
-cd frontend
-npm install
-```
+## 📰 Notícias
 
-### **3. Rodar o frontend (modo desenvolvimento)**
-```bash
-npm run dev
-```
-O portal estará disponível em [http://localhost:5173](http://localhost:5173)
+Content-type: - noticia
 
-### **4. Instalar e rodar o Strapi**
-```bash
-cd ../backend
-npx create-strapi-app . --quickstart
-```
+Endpoints: - GET /api/noticias - GET /api/noticias/:id
 
-### **5. Criar coleções no Strapi**
-Acesse o painel do Strapi em [http://localhost:1337/admin](http://localhost:1337/admin)
+Permissões: - find - findOne
 
-Crie as seguintes coleções:
-- **Notícias**: título, resumo, imagem, data, categoria  
-- **Links**: nome, URL, descrição, ícone  
-- **Salas de Reunião**: nome, horário, status  
+## 📅 Sala de Reuniões
 
----
+-   Integração com Cal.com
 
-## 🔗 **Integrações Planejadas**
+## 🚗 Veículos (Em desenvolvimento)
 
-### 🔹 Trello
-- Exibir quadros internos com campanhas e projetos
-- Endpoint base:
-  ```
-  https://api.trello.com/1/boards/{BOARD_ID}?key={API_KEY}&token={TOKEN}
-  ```
+-   veiculo
+-   agendamento
 
-### 🔹 Strapi
-- Consumo via endpoints REST:
-  ```
-  GET /api/noticias
-  GET /api/links
-  GET /api/salas
-  ```
+------------------------------------------------------------------------
 
----
+# 🔐 Segurança
 
-## 🖥️ **Configuração no Servidor Apache**
+Role Public: - workflow-api → find, findOne - card-list → find,
+findOne - card-detalhe → find, findOne - noticia → find, findOne
 
-### Arquivo `apache-config/ecoportal.conf`
-```apache
-<VirtualHost *:80>
-    ServerName ecoportal.intranet
-    DocumentRoot /var/www/ecoportal
-    <Directory /var/www/ecoportal>
-        AllowOverride All
-        Require all granted
-    </Directory>
-</VirtualHost>
-```
+------------------------------------------------------------------------
 
-### Arquivo `.htaccess`
-```apache
-RewriteEngine On
-RewriteBase /
-RewriteRule ^index\.html$ - [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.html [L]
-```
+# 🌍 Ambientes
 
----
+## Desenvolvimento
 
-## 🧪 **Testes e Qualidade**
+Frontend: http://localhost:5174 Strapi: http://localhost:1338
 
-- ✅ Testes de API com Postman / Insomnia  
-- 📱 Verificação de responsividade (mobile, tablet, desktop)  
-- ⚙️ Testes de performance e cache (Lighthouse / GTMetrix)  
-- 🔒 Verificação de permissões e autenticação no Strapi  
+## Produção
 
----
+Portal: http://10.0.0.197/Portal/ Strapi: http://10.0.0.197:1337
 
-## 📘 **Próximos Passos / Roadmap**
+------------------------------------------------------------------------
 
-| Etapa | Status | Descrição |
-|-------|---------|------------|
-| Planejamento e mockups | ✅ | Baseado no croqui inicial |
-| Criação do projeto React | 🔄 | Em desenvolvimento |
-| Setup do Strapi CMS | 🔲 | A iniciar |
-| Integração com Trello | 🔲 | Testar API interna |
-| Implementar calendário | 🔲 | Componente FullCalendar |
-| Deploy no Apache | 🔲 | Após build final |
+# ▶️ Como Rodar
 
----
+## Frontend
 
-## 💚 **Contribuições**
+npm install npm run dev
 
-Sinta-se à vontade para contribuir, sugerir melhorias ou reportar bugs.  
-Crie um **pull request** ou abra uma **issue**.
+## Backend
 
----
+npm install npm run develop
+
+------------------------------------------------------------------------
+
 
 ## 👨‍💻 **Autor**
 

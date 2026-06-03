@@ -21,10 +21,10 @@ export default function LinksCarousel() {
     const links = [
         { title: "👨‍💻 TI Links", url: "/tiLinks", color: "border-yellow-500", description: "Links de serviços de TI" }, // <-- usa rota interna
         { title: "🙋‍♀️ Feedz", url: "https://app.feedz.com.br", color: "border-blue-500", description: "Comunidade Ambipar Limeira e Andradas" },
-        { title: "🔧 Chamado TI", url: "http://10.0.0.251/glpi/front/central.php", color: "border-yellow-500", description: "Painel de chamados de TI" },
+        { title: "🔧 Chamado TI", url: "https://docs.google.com/forms/d/e/1FAIpQLSdkovIwpjf_rxBWkSJvQqgvFC7d1Fanhwqc8IbLlvZKwFlzfw/viewform?usp=sharing&ouid=101621433194121975401", color: "border-yellow-500", description: "Painel de chamados de TI" },
         { title: "🌐 Nosso Site", url: "https://fundicaomagma.com.br/", color: "border-purple-500", description: "Nossa página Web" },
         { title: "🌐 Workflow Ambipar", url: "https://ambipar.wtmh.com.br/login", color: "border-black-500", description: "Nossa página Web" },
-        { title: "🌐 Sistema Sygecom", url: "https://cloud.sygecom.com.br/sagi_magma.html", color: "border-green-500", description: "Processos sistema Sygecom" },
+        { title: "🌐 Sistema Sygecom", url: "https://sistema.sygecom.com.br/magma", color: "border-green-500", description: "Processos sistema Sygecom" },
         { title: "🚚 Logística", url: "/logisticalinks", color: "border-pink-500", description: "Links de reatreamento de Logística." },
         { title: "💰 Financeiro", url: "/financeiroLinks", color: "border-green-500", description: "Links Financeiros." },
         { title: "📊 Dashboard", url: "#", color: "border-red-500", description: "Torre de Dados Ambipar (em construção)" },

@@ -9,6 +9,7 @@ import LogisticaLinks from "./components/LogisticaLinks";
 import FinanceiroLinks from "./components/FinanceiroLinks";
 import MeetingScheduler from "./components/MeetingScheduler";
 import ForceTopOnMount from "./components/ForceTopOnMount";
+import Chamados from "./components/Chamados";
 import NoticiasList from "./pages/Noticias/NoticiasList";
 import NoticiaDetalhe from "./pages/Noticias/NoticiaDetalhe";
 import ListagemGeral from "./pages/Workflow/ListagemGeral";
@@ -62,6 +63,8 @@ function AppContent() {
                 <LinksCarousel />
                 {/* Agendamento de reuniões */}
                 <MeetingScheduler />
+                {/* Chamados de TI */}
+                <Chamados />
               </>
             }
           />

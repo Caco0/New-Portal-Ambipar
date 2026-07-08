@@ -58,6 +58,13 @@ export default function Header() {
                 </Link>
 
                 <Link
+                    to="/#chamados"
+                    className="text-black dark:text-[#CDFF00] hover:text-[#B2CC21] dark:hover:text-white transition-colors"
+                >
+                    Chamados TI
+                </Link>
+
+                <Link
                     to="/veiculos"
                     className="text-black dark:text-[#CDFF00] hover:text-[#B2CC21] dark:hover:text-white transition-colors"
                 >

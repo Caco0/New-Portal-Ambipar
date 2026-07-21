@@ -63,6 +63,12 @@ export default function VeiculosLogin() {
                     </button>
                 </div>
                 </form>
+                
+                <div>
+                    <a href="" target="_blank" rel="noopener noreferrer" className="m-auto text-white dark:text-gray-400 hover:text-blue-700">
+                        Cadastre-se
+                    </a>
+                </div>
 
                 <div className="w-full mx-auto">
                 <div className="p-2 bg-[#CDFF00] dark:bg-gray-800 rounded-xl shadow hover:shadow-green-400/60 transition-all">

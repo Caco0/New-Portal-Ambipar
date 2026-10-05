@@ -23,7 +23,7 @@ export default factories.createCoreController(
       try{
         const agendamento = await strapi
           .service("api::agendamento.agendamento")
-          .iniciarAgendamento(documentId, dados);
+          .iniciarAgendamento(documentId, dados, usuario);
 
         ctx.body = {
           data: agendamento,

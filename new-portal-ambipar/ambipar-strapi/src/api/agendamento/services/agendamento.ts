@@ -14,6 +14,10 @@ export default factories.createCoreService("api::agendamento.agendamento",
             populate: ["veiculo", "solicitante"],
       });
       if (!agendamento) {
+        throw new Error("Agendamento não encontrado");
+      }
+
+      if (agendamento.status_agendamento !== "reservado") {
         throw new Error(`Agendamento não pode ser iniciado pois está com status '${agendamento.status_agendamento}'`);
       }
       return agendamento;

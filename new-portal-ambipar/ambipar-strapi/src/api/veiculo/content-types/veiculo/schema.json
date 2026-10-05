@@ -30,7 +30,7 @@
         "multiple": false,
         "allowedTypes": ["images"]
         },
-        "status": {
+        "status_veiculo": {
         "type": "enumeration",
         "enum": ["disponivel", "manutencao", "indisponivel"],
         "default": "disponivel",

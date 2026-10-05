@@ -24,6 +24,17 @@ export default {
             policies: [],
         },
         },
+
+        // Iniciar utilização do veículo
+        {
+        method: "POST",
+        path: "/agendamentos/:documentId/iniciar",
+        handler: "agendamento.iniciar",
+        config: {
+            policies: [],
+        },
+        },
+
         {
         method: "PUT",
         path: "/agendamentos/:id",

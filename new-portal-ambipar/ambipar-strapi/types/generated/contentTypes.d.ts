@@ -477,7 +477,9 @@ export interface ApiAgendamentoAgendamento extends Struct.CollectionTypeSchema {
       'plugin::users-permissions.user'
     > &
       Schema.Attribute.Required;
-    status: Schema.Attribute.Enumeration<['reservado', 'em_uso', 'concluido']> &
+    status_agendamento: Schema.Attribute.Enumeration<
+      ['reservado', 'em_uso', 'concluido']
+    > &
       Schema.Attribute.DefaultTo<'reservado'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -635,7 +637,7 @@ export interface ApiVeiculoVeiculo extends Struct.CollectionTypeSchema {
       Schema.Attribute.Unique;
     publishedAt: Schema.Attribute.DateTime;
     quilometragem: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
-    status: Schema.Attribute.Enumeration<
+    status_veiculo: Schema.Attribute.Enumeration<
       ['disponivel', 'manutencao', 'indisponivel']
     > &
       Schema.Attribute.Required &

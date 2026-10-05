@@ -14,11 +14,11 @@ Frontend (React + Vite) ↓ API REST (Strapi v5) ↓ Banco de Dados (SQLite
 
 ## Ambiente
 
--   🌐 Intranet: http://10.0.0.197/Portal/
--   ⚙️ Backend Strapi: http://10.0.0.197:1337
+-   🌐 Intranet: http://10.0.0.199/Portal/
+-   ⚙️ Backend Strapi: http://10.0.0.199:1337
 -   🧪 Desenvolvimento local:
-    -   Frontend: http://localhost:5174
-    -   Strapi: http://localhost:1338
+-   Frontend: http://localhost:5174
+-   Strapi: http://localhost:1338
 
 ------------------------------------------------------------------------
 
@@ -78,7 +78,7 @@ Frontend: http://localhost:5174 Strapi: http://localhost:1338
 
 ## Produção
 
-Portal: http://10.0.0.197/Portal/ Strapi: http://10.0.0.197:1337
+Portal: http://10.0.0.199/Portal/ Strapi: http://10.0.0.199:1337
 
 ------------------------------------------------------------------------
 

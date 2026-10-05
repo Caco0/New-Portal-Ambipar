@@ -25,7 +25,7 @@
         "required": true
         },
 
-        "status": {
+        "status_agendamento": {
         "type": "enumeration",
         "enum": ["reservado", "em_uso", "concluido"],
         "default": "reservado"

@@ -462,10 +462,10 @@ export interface ApiAgendamentoAgendamento extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     nivel_combustivel_chegada: Schema.Attribute.Enumeration<
-      ['vazio', 'um_quarto', 'meio', 'tres_quartos', 'cheio']
+      ['vazio', 'um_quarto', 'dois quartos', 'tres_quartos', 'meio', 'cheio']
     >;
     nivel_combustivel_saida: Schema.Attribute.Enumeration<
-      ['vazio', 'um_quarto', 'meio', 'tres_quartos', 'cheio']
+      ['vazio', 'um_quarto', 'dois quartos', 'tres_quartos', 'meio', 'cheio']
     >;
     numero_cnh: Schema.Attribute.String;
     ocorrencias: Schema.Attribute.RichText;

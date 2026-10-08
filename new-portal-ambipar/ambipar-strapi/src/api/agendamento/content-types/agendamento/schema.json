@@ -43,7 +43,7 @@
 
         "nivel_combustivel_saida": {
         "type": "enumeration",
-        "enum": ["vazio", "um_quarto", "meio", "tres_quartos", "cheio"]
+        "enum": ["vazio", "um_quarto", "dois quartos", "tres_quartos", "meio", "cheio"]
         },
 
         "quilometragem_inicial": {
@@ -56,7 +56,7 @@
         "quilometragem_final": { "type": "integer" },
         "nivel_combustivel_chegada": {
         "type": "enumeration",
-        "enum": ["vazio", "um_quarto", "meio", "tres_quartos", "cheio"]
+        "enum": ["vazio", "um_quarto", "dois quartos", "tres_quartos", "meio", "cheio"]
         },
 
         "data_retorno": { "type": "date" },

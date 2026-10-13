@@ -35,6 +35,17 @@ export default {
         },
         },
 
+        // Finalizar utilização do veículo
+
+        {
+        method: "POST",
+        path: "/agendamentos/:documentId/finalizar",
+        handler: "agendamento.finalizar",
+        config: {
+            policies: [],
+        },
+        },
+
         {
         method: "PUT",
         path: "/agendamentos/:id",

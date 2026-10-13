@@ -462,12 +462,12 @@ export interface ApiAgendamentoAgendamento extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     nivel_combustivel_chegada: Schema.Attribute.Enumeration<
-      ['vazio', 'um_quarto', 'dois quartos', 'tres_quartos', 'meio', 'cheio']
+      ['vazio', 'um_quarto', 'dois quartos', 'meio', 'tres_quartos', 'cheio']
     >;
     nivel_combustivel_saida: Schema.Attribute.Enumeration<
-      ['vazio', 'um_quarto', 'dois quartos', 'tres_quartos', 'meio', 'cheio']
+      ['vazio', 'um_quarto', 'dois quartos', 'meio', 'tres_quartos', 'cheio']
     >;
-    numero_cnh: Schema.Attribute.String;
+    numero_cnh: Schema.Attribute.String & Schema.Attribute.Required;
     ocorrencias: Schema.Attribute.RichText;
     publishedAt: Schema.Attribute.DateTime;
     quilometragem_final: Schema.Attribute.Integer;
@@ -484,7 +484,7 @@ export interface ApiAgendamentoAgendamento extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    validade_cnh: Schema.Attribute.Date;
+    validade_cnh: Schema.Attribute.Date & Schema.Attribute.Required;
     veiculo: Schema.Attribute.Relation<'manyToOne', 'api::veiculo.veiculo'> &
       Schema.Attribute.Required;
   };

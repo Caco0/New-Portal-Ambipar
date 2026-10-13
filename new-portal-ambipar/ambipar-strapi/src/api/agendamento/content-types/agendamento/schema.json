@@ -38,12 +38,12 @@
         "hora_inicio": { "type": "time", "required": true },
         "hora_fim": { "type": "time", "required": true },
 
-        "numero_cnh": { "type": "string" },
-        "validade_cnh": { "type": "date" },
+        "numero_cnh": { "type": "string", "required": true },
+        "validade_cnh": { "type": "date", "required": true },
 
         "nivel_combustivel_saida": {
         "type": "enumeration",
-        "enum": ["vazio", "um_quarto", "dois quartos", "tres_quartos", "meio", "cheio"]
+        "enum": ["vazio", "um_quarto", "dois quartos", "meio", "tres_quartos", "cheio"]
         },
 
         "quilometragem_inicial": {
@@ -56,7 +56,7 @@
         "quilometragem_final": { "type": "integer" },
         "nivel_combustivel_chegada": {
         "type": "enumeration",
-        "enum": ["vazio", "um_quarto", "dois quartos", "tres_quartos", "meio", "cheio"]
+        "enum": ["vazio", "um_quarto", "dois quartos", "meio", "tres_quartos", "cheio"]
         },
 
         "data_retorno": { "type": "date" },

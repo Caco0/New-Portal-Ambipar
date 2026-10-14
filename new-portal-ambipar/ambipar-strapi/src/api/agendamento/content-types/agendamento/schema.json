@@ -36,7 +36,10 @@
 
         "data_agendada": { "type": "date", "required": true },
         "hora_inicio": { "type": "time", "required": true },
+        
+        "data_fim_prevista": { "type": "date" },
         "hora_fim": { "type": "time", "required": true },
+        
 
         "numero_cnh": { "type": "string", "required": true },
         "validade_cnh": { "type": "date", "required": true },

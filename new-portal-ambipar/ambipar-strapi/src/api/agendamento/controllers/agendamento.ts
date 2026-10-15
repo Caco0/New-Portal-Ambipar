@@ -43,6 +43,18 @@ export default factories.createCoreController(
         validade_cnh,
       } = dados;
 
+      if (
+        !(
+          (typeof veiculo === "number" && 
+            Number.isInteger(veiculo) &&
+            veiculo > 0) ||
+            (typeof veiculo === "string" &&
+              veiculo.trim().length > 0)
+          )
+        ) {
+          return ctx.badRequest("Veiculo Inválido ou não informado.");
+        }
+
       // validação da CNH
       if (
         typeof numero_cnh !== "string" ||
@@ -116,7 +128,25 @@ export default factories.createCoreController(
     
     const data_fim_prevista = dataFim.toISOString().slice(0, 10);
     
-    
+    const filtroVeiculo = typeof veiculo === "number" 
+    ? { id: veiculo } 
+    : { documentId: veiculo.trim()};
+
+    const veiculoEncontrado = await strapi.db
+      .query("api::veiculo.veiculo")
+      .findOne({
+        where: filtroVeiculo,
+      });
+
+      if (!veiculoEncontrado) {
+        return ctx.badRequest("Veículo não encontrado.");
+      }
+
+      if (veiculoEncontrado.status_veiculo !== "disponivel") {
+        return ctx.badRequest("Veículo indisponível ou em manutenção.")
+      }
+
+      const veiculoId =  veiculoEncontrado.id;
 
     try {
 
@@ -137,7 +167,7 @@ export default factories.createCoreController(
             filters: {
               veiculo: {
                 id: {
-                  $eq: veiculo,
+                  $eq: veiculoId,
                 },
               },
               status_agendamento: {
@@ -222,7 +252,7 @@ export default factories.createCoreController(
           "api::agendamento.agendamento"
         ).create({
           data: {
-            veiculo,
+            veiculo: veiculoEncontrado.documentId,
             destino,
             finalidade,
             data_agendada,

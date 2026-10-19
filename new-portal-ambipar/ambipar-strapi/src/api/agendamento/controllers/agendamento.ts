@@ -174,6 +174,7 @@ export default factories.createCoreController(
         // =========================================
         // TRANSAÇÃO DE AGENDAMENTO
         // =========================================
+
         const agendamento = await strapi.db.transaction(
           async ({ trx }) => {
 
@@ -370,16 +371,44 @@ export default factories.createCoreController(
         };
 
       } catch (error: any) {
-        strapi.log.error(
-          "Erro ao criar agendamento:",
-          error
-        );
+        const mensagem = String(error?.message ?? "" )
+        const codigo = String(error?.code ?? "");
 
-        return ctx.badRequest(
-          error?.message ||
-          "Não foi possível criar o agendamento."
-        );
+        //Banco temporariamente ocupado 
+        if (
+          codigo.includes("SQLITE_BUSY") ||
+          mensagem.includes("SQLITE_BUSY") ||
+          mensagem.includes("database is locked")
+        ) {
+          strapi.log.warn(
+            "SQLite ocupado durante a criação do agendamento."
+          );
+          ctx.status = 503;
+          ctx.body = {
+            data: null,
+            error: {
+              status: 503,
+              name: "ServiceUnavailableError",
+              message: "O sistema está processando outra operação. Aguarde alguns segundos e tente novamente."
+            },
+        };
+        return;
       }
+      if ( mensagem === 
+        "Veículo já está agendado nesta data e período."
+      ) {
+        return ctx.badRequest(mensagem)
+      }
+      // Demais Erros 
+
+      strapi.log.error(
+        "Erro ao criar agendamento", error
+      );
+
+      return ctx.badRequest(
+        mensagem || "Não foi possível criar o agendamento"
+      );
+    }
     },
 
     // =========================================

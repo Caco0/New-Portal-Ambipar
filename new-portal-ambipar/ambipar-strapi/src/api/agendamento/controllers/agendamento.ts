@@ -1,4 +1,3 @@
-
 /**
  * agendamento controller
  */
@@ -38,7 +37,9 @@ export default factories.createCoreController(
         destino,
         finalidade,
         data_agendada,
+        quilometragem_inicial,
         hora_inicio,
+        data_fim_prevista, 
         hora_fim,
         numero_cnh,
         validade_cnh,
@@ -139,28 +140,75 @@ export default factories.createCoreController(
           ? `${hora_fim}:00`
           : hora_fim;
 
-      if (inicioNormalizado === fimNormalizado) {
+      // =========================================
+      // VALIDAR DATA PREVISTA DE DEVOLUÇÃO
+      // =========================================
+      if (
+        typeof data_fim_prevista !== "string" ||
+        !dataValida(data_fim_prevista)
+      ) {
         return ctx.badRequest(
-          "Horário de início deve ser diferente do horário de término."
+          "Informe uma data prevista de término válida."
+        );
+      }
+
+      if (data_fim_prevista < data_agendada) {
+        return ctx.badRequest(
+          "A data prevista de término não pode ser anterior à data de início."
+        );
+      }
+
+      const inicioReserva =
+        `${data_agendada}T${inicioNormalizado}`;
+
+      const fimReserva =
+        `${data_fim_prevista}T${fimNormalizado}`;
+
+      if (fimReserva <= inicioReserva) {
+        return ctx.badRequest(
+          "O término da reserva deve ser posterior ao início."
+        );
+      }
+      if (
+        !Number.isSafeInteger(quilometragem_inicial) ||
+        quilometragem_inicial < 0
+      ) {
+        return ctx.badRequest(
+          "Informe uma quilometragem inicial válida."
         );
       }
 
       // =========================================
-      // CALCULAR DATA PREVISTA DE DEVOLUÇÃO
+      // VALIDAR PERÍODO FUTURO DA RESERVA
       // =========================================
-      const dataFim = new Date(
-        `${data_agendada}T00:00:00Z`
-      );
 
-      if (fimNormalizado < inicioNormalizado) {
-        dataFim.setUTCDate(
-          dataFim.getUTCDate() + 1
+      // Horário local da operação (Brasil)
+
+      const agora = new Date();
+
+      const dataHoraBrasil = new Intl.DateTimeFormat("sv-SE", {
+        timeZone: "America/Sao_Paulo",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hourCycle: "h23",
+      }).format(agora).replace(" ", "T");
+
+      // Bloquear inicio no passado
+      if (inicioReserva <= dataHoraBrasil) {
+        return ctx.badRequest(
+          "A data e horário de inicio devem ser futuros."
         );
       }
-
-      const data_fim_prevista = dataFim
-        .toISOString()
-        .slice(0, 10);
+      // CNH deve estar até o termino da reserva
+      if ( validade_cnh < data_fim_prevista) {
+        return ctx.badRequest(
+          "A CNH deve estar válida até a data prevista de devolução."
+        );
+      }
 
       // =========================================
       // LOCALIZAR VEÍCULO
@@ -352,6 +400,7 @@ export default factories.createCoreController(
                 finalidade,
                 data_agendada,
                 hora_inicio: inicioNormalizado,
+                quilometragem_inicial,
                 data_fim_prevista,
                 hora_fim: fimNormalizado,
                 numero_cnh,
@@ -443,9 +492,37 @@ export default factories.createCoreController(
         ctx.body = {
           data: agendamento,
         };
-      } catch (error: any) {
-        return ctx.badRequest(error.message);
-      }
+        } catch (error: any) {
+          const mensagem = String (
+            error?.message ?? "Não foi possível criar um agendamento."
+          );
+          const codigo = String(error?.code ?? "");
+
+          //Banco ocupado por outra operação simultânea 
+          if (
+            codigo.includes("SQLITE_BUSY") ||
+            mensagem.includes("SQLITE_BUSY") ||
+            mensagem.includes("database is locked")
+          ) {
+            strapi.log.warn(
+              "SQLite ocupado durante o inicio dda utilização."
+            );
+
+            ctx.status = 503;
+
+            ctx.body = {
+              data: null,
+              error: {
+                status: 503,
+                name: "ServiceUnavailableError",
+                message:
+                "O sistema está processando outra operação. Aguarde alguns segundos e tente novamente.",
+              },
+            };
+            return;
+          }
+          return ctx.badRequest(mensagem);
+        }
     },
 
     // =========================================

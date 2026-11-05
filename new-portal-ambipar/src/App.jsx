@@ -15,8 +15,8 @@ import NoticiaDetalhe from "./pages/Noticias/NoticiaDetalhe";
 import ListagemGeral from "./pages/Workflow/ListagemGeral";
 import DetalheGeral from "./pages/Workflow/DetalheGeral";
 import VeiculosPortal from "./pages/Veiculos/VeiculosPortal";
-import VeiculosLogin from "./pages/Veiculos/login";
-// import AgendaVeiculos from "./pages/Veiculos/AgendaVeiculos";
+import VeiculosLogin from "./pages/Veiculos/Login";
+import AgendaVeiculos from "./pages/Veiculos/AgendaVeiculos";
 
 import "./index.css";
 
@@ -85,7 +85,7 @@ function AppContent() {
           {/** Veículos */}
           <Route path="/veiculos" element={<VeiculosPortal />} />
           <Route path="/veiculos/login" element={<VeiculosLogin />} />
-          {/* <Route path="/veiculos/agenda" element={<AgendaVeiculos />} /> */}
+          <Route path="/veiculos/agenda" element={<AgendaVeiculos />} /> 
 
         </Routes>
       </main>

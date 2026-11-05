@@ -4,6 +4,7 @@
  */
 
 import { factories } from "@strapi/strapi";
+import veiculo from "../../veiculo/controllers/veiculo";
 
 export default factories.createCoreService(
   "api::agendamento.agendamento",
@@ -43,6 +44,93 @@ export default factories.createCoreService(
           `Agendamento não pode ser iniciado pois está com status '${agendamento.status_agendamento}'.`
         );
       }
+
+      // ============================================
+      // VALIDAR ANTECEDÊNCIA MÁXIMA DE 30 MINUTOS
+      // ============================================
+
+      // Data e hora atuais no fuso de São Paulo
+      const partesAgora = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/Sao_Paulo",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hourCycle: "h23",
+      }).formatToParts(new Date());
+
+      const obterParte = (tipo: string) =>
+        partesAgora.find((parte) => parte.type === tipo)?.value ?? "";
+
+      const agoraBrasil = [
+        obterParte("year"),
+        obterParte("month"),
+        obterParte("day"),
+      ].join("-") + "T" + [
+        obterParte("hour"),
+        obterParte("minute"),
+        obterParte("second"),
+      ].join(":");
+
+      // Horário de início previsto na reserva
+      const inicioAgendado =
+        `${agendamento.data_agendada}T${String(agendamento.hora_inicio).slice(0, 8)}`;
+
+      const inicioAgendadoMs = Date.parse(inicioAgendado);
+      const agoraBrasilMs = Date.parse(agoraBrasil);
+
+      if (
+        !Number.isFinite(inicioAgendadoMs) ||
+        !Number.isFinite(agoraBrasilMs)
+      ) {
+        throw new Error("Data ou horário da reserva inválidos.");
+      }
+
+      // Permitir retirada até 30 minutos antes
+      const inicioPermitidoMs = inicioAgendadoMs - 30 * 60 * 1000;
+
+      if (agoraBrasilMs < inicioPermitidoMs) {
+        throw new Error(
+          "A utilização só pode ser iniciada até 30 minutos antes do horário agendado."
+        );
+      }
+
+      // ============================================
+      // VERIFICAR OUTRA UTILIZAÇÃO ATIVA
+      // ============================================
+      if (!agendamento.veiculo.documentId) {
+        throw new Error(
+          "Veículo vinculado ao agendamento não encontrado."
+        );
+      }
+
+      const utilizacoesAtivas = await strapi
+        .documents("api::agendamento.agendamento")
+        .findMany({
+          filters: {
+            veiculo:{
+              documentId:{
+                $eq: agendamento.veiculo.documentId,
+              },
+            },
+            status_agendamento: {
+              $eq: "em_uso",
+            },
+          },
+          populate: ["veiculo"],
+        });
+
+        const outraUtilizacaoAtiva = utilizacoesAtivas.some(
+          (reserva) => reserva.documentId !== documentId
+        );
+
+        if (outraUtilizacaoAtiva) {
+          throw new Error (
+            "Este veículo está em uso por outro motorista. Aguarde  a Finalização da Utilização."
+          )
+        }
 
       // Verificar quilometragem inicial obrigatória
       if (

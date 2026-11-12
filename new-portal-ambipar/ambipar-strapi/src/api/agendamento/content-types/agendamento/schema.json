@@ -56,6 +56,16 @@
         "data_inicio_real": { "type": "date" },
         "hora_inicio_real": { "type": "time" },
 
+        "observacoes_retirada": {
+        "type": "text"
+        },
+
+        "imagens_retirada": {
+        "type": "media",
+        "multiple": true,
+        "allowedTypes": ["images"]
+        },
+
         "quilometragem_final": { "type": "integer" },
         "nivel_combustivel_chegada": {
         "type": "enumeration",

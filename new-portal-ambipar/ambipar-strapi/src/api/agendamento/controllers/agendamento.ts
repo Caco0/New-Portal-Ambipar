@@ -3,10 +3,140 @@
  */
 
 import { factories } from "@strapi/strapi";
+import agendamento from "../routes/agendamento";
+
+// Controle de vistorias em processamento
+const vistoriasEmProcessamento = new Set<string>();
 
 export default factories.createCoreController(
   "api::agendamento.agendamento",
   ({ strapi }) => ({
+
+    // =========================================
+    // PROTEGER EVIDÊNCIAS DA VISTORIA
+    // =========================================
+    
+    async update(ctx){
+      const usuario = ctx.state.user;
+
+      if (!usuario) {
+        return ctx.unauthorized("Usuário não autenticado.");
+      }
+      
+      const dados =  ctx.request.body?.data;
+
+      if (!dados || typeof dados !== "object" || Array.isArray(dados)) {
+        return ctx.badRequest("Dados de atualização inválidos.");
+      }
+
+      const camposProtegidos = [
+        "imagens_retirada",
+        "observacoes_retirada",
+        "imagens_ocorrencia",
+        "ocorrencias",
+      ];
+    
+      const tentativaAlteracao = camposProtegidos.some(
+        (campo) => Object.prototype.hasOwnProperty.call(dados, campo)
+      );
+
+      if (tentativaAlteracao) {
+        return ctx.forbidden(
+          "As evidencias de vistoria não podem ser alteradas por esta rota."
+        );
+      }
+      return await super.update(ctx);
+    },
+
+    // =========================================
+    // PROTEGER EXCLUSÃO DE AGENDAMENTOS
+    // =========================================
+
+    async delete(ctx) {
+      const usuario = ctx.state.user;
+      const { id } = ctx.params;
+
+      if (!usuario) {
+        return ctx.unauthorized("Usuário não autenticado.");
+      }
+
+      const agendamento = await strapi
+        .documents("api::agendamento.agendamento")
+        .findOne({
+          documentId: id,
+          populate: {
+            solicitante: true,
+            imagens_retirada: true,
+          },
+        });
+
+      if (!agendamento) {
+        return ctx.notFound("Agendamento não encontrado.");
+      }
+
+      if (agendamento.solicitante?.id !== usuario.id) {
+        return ctx.forbidden(
+          "Você não tem permissão para excluir esta reserva."
+        );
+      }
+
+      if (agendamento.status_agendamento !== "reservado") {
+        return ctx.forbidden(
+          "Reservas em uso ou concluídas não podem ser excluídas."
+        );
+      }
+
+      if ((agendamento.imagens_retirada?.length ?? 0) > 0) {
+        return ctx.forbidden(
+          "Esta reserva possui fotografias de vistoria e não pode ser excluída."
+        );
+      }
+
+      return await super.delete(ctx);
+    },
+
+    // =========================================
+    // LISTAR AGENDAMENTOS DO MOTORISTA
+    // =========================================
+
+    async meus(ctx) {
+      const usuario = ctx.state.user;
+      if (!usuario) {
+        return ctx.unauthorized("Usuário não autenticado.");
+      }
+
+      try {
+        const agendamentos = await strapi.documents(
+          "api::agendamento.agendamento"
+        ).findMany({
+          filters: {
+            solicitante: {
+              id: {
+                $eq: usuario.id,
+              },
+            },
+          },
+          populate: {
+            veiculo: {
+              fields: ["documentId", "nome", "placa"],
+            },
+          },
+          sort: ["data_agendada:desc", "hora_chegada:desc" ],
+          limit: 100,
+        });
+        ctx.body = { 
+          data: agendamentos,
+        };
+      } catch (error) {
+        strapi.log.error (
+          "Erro ao listar agendamento do motorista: ",
+          error
+        );
+        return ctx.internalServerError(
+          "não foi possivel carregar suas reservas."
+        );
+      }
+    },
 
     // =========================================
     // CRIAR AGENDAMENTO
@@ -458,6 +588,166 @@ export default factories.createCoreController(
         mensagem || "Não foi possível criar o agendamento"
       );
     }
+    },
+
+    // =========================================
+    // VISTORIA DE RETIRADA
+    // =========================================
+    async vistoriaRetirada(ctx) {
+      const usuario = ctx.state.user;
+      const { documentId } = ctx.params;
+
+      if (!usuario) {
+        return ctx.unauthorized("Usuário não autenticado.");
+      }
+
+      if (!documentId) {
+        return ctx.badRequest("Agendamento não informado.");
+      }
+
+      // Verificar se já existe vistoria em andamento
+      if (vistoriasEmProcessamento.has(documentId)) {
+        return ctx.conflict(
+          "Já existe uma vistoria de retirada em processamento para esta reserva."
+        );
+      }
+
+      // ATIVAR A TRAVA
+      vistoriasEmProcessamento.add(documentId);
+
+      try {
+        const agendamento = await strapi
+          .documents("api::agendamento.agendamento")
+          .findOne({
+            documentId,
+            populate: {
+              solicitante: true,
+            },
+          });
+
+        if (!agendamento) {
+          return ctx.notFound("Agendamento não encontrado.");
+        }
+
+        if (agendamento.solicitante?.id !== usuario.id) {
+          return ctx.forbidden(
+            "Você não tem permissão para realizar esta vistoria."
+          );
+        }
+
+        if (agendamento.status_agendamento !== "reservado") {
+          return ctx.badRequest(
+            "A vistoria de retirada só pode ser realizada antes do início da utilização."
+          );
+        }
+
+        // =========================================
+        // VALIDAR FOTOGRAFIAS DA RETIRADA
+        // =========================================
+
+        const arquivosRecebidos = (ctx.request as any).files?.imagens_retirada;
+
+        const imagens = arquivosRecebidos
+          ? Array.isArray(arquivosRecebidos)
+            ? arquivosRecebidos
+            : [arquivosRecebidos]
+          : [];
+
+          const MAX_IMAGENS = 5;
+          const MAX_TAMANHO = 5 * 1024 * 1024;
+
+          const formatosPermitidos = [
+            "image/jpeg",
+            "image/png",
+            "image/webp",
+          ];
+          if (imagens.length > MAX_IMAGENS) {
+            return ctx.badRequest(
+              "É permitido enviar no máximo 5 fotografias."
+            );
+          }
+          for (const imagem of imagens) {
+            const tipoArquivo = imagem.mimetype ?? imagem.type;
+
+            strapi.log.info(
+              `Vistoria: tipo recebido = ${tipoArquivo ?? "não identificado"}`
+            );
+
+            if (!formatosPermitidos.includes(tipoArquivo)) {
+              return ctx.badRequest(
+                "Formato inválido. Utilize JPG, PNG ou WebP."
+              );
+            }
+            if (imagem.size > MAX_TAMANHO) {
+              return ctx.badRequest(
+                "Cada fotografia deve ter no máximo 5 MB."
+              );
+            }
+          }
+
+          // =========================================
+          // IMPEDIR REENVIO DE FOTOGRAFIAS
+          // =======================================
+
+          if (imagens.length > 0 ) {
+            const reservaComImagens = await strapi
+              .documents("api::agendamento.agendamento")
+              .findOne({
+                documentId,
+                populate: {
+                  imagens_retirada: true,
+                },
+              });
+              const imagensExistentes =  reservaComImagens?.imagens_retirada ?? [];
+
+              if (imagensExistentes.length > 0 ) {
+                return ctx.badRequest(
+                  "esta reserva já possui fotografias de retirada. Não é permitido subistituilas."
+                );
+              }
+          }
+
+        // =========================================
+        // ARMAZENAR FOTOGRAFIAS DA RETIRADA
+        // =========================================
+
+        if (imagens.length > 0) {
+          const uploadService = strapi.plugin("upload").service("upload");
+
+          const arquivosSalvos = await uploadService.upload({
+            data:{
+              refId: agendamento.id,
+              ref: "api::agendamento.agendamento",
+              field: "imagens_retirada",
+            },
+            files: imagens,
+          });
+          strapi.log.info(
+            `Vistoria ${documentId}: ${arquivosSalvos.length} fotografia(as) enviada(as).`
+          );
+        }
+
+        ctx.body = {
+          data: {
+            documentId,
+            autorizado: true,
+            mensagem: "Reserva validada para vistoria de retirada.",
+          },
+        };
+
+      } catch (error) {
+        strapi.log.error(
+          "Erro ao validar vistoria de retirada:",
+          error
+        );
+
+        return ctx.internalServerError(
+          "Não foi possível validar a vistoria de retirada."
+        );
+      } finally {
+        // Liberara a trava mesmo se ocorrer um erro
+        vistoriasEmProcessamento.delete(documentId);
+      }
     },
 
     // =========================================

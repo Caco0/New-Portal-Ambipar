@@ -456,6 +456,7 @@ export interface ApiAgendamentoAgendamento extends Struct.CollectionTypeSchema {
     hora_inicio: Schema.Attribute.Time & Schema.Attribute.Required;
     hora_inicio_real: Schema.Attribute.Time;
     imagens_ocorrencia: Schema.Attribute.Media<'images', true>;
+    imagens_retirada: Schema.Attribute.Media<'images', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -469,6 +470,7 @@ export interface ApiAgendamentoAgendamento extends Struct.CollectionTypeSchema {
       ['vazio', 'um_quarto', 'dois quartos', 'meio', 'tres_quartos', 'cheio']
     >;
     numero_cnh: Schema.Attribute.String & Schema.Attribute.Required;
+    observacoes_retirada: Schema.Attribute.Text;
     ocorrencias: Schema.Attribute.RichText;
     publishedAt: Schema.Attribute.DateTime;
     quilometragem_final: Schema.Attribute.Integer;

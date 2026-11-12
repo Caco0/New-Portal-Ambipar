@@ -8,6 +8,16 @@ export default {
             policies: [],
         },
         },
+
+        {
+        method: "GET",
+        path: "/agendamentos/meus",
+        handler: "agendamento.meus",
+        config: {
+            policies: [],
+        },
+        },
+
         {
         method: "GET",
         path: "/agendamentos/:id",
@@ -25,10 +35,21 @@ export default {
         },
         },
 
+        // Enviar fotografias da vistoria de retirada.
+
+        {
+        method: "POST",
+        path: "/agendamentos/:documentId/vistoria-retirada",
+        handler: "agendamento.vistoriaRetirada",
+        config: {
+            policies: [],
+        },
+        },
+
         // Iniciar utilização do veículo
         {
         method: "POST",
-        path: "/agendamentos/:documentId/iniciar",
+        path: "/agendamentos/:documentId/iniciar", //Rota solicitada!!!
         handler: "agendamento.iniciar",
         config: {
             policies: [],
@@ -45,6 +66,7 @@ export default {
             policies: [],
         },
         },
+
 
         {
         method: "PUT",

@@ -17,6 +17,7 @@ import DetalheGeral from "./pages/Workflow/DetalheGeral";
 import VeiculosPortal from "./pages/Veiculos/VeiculosPortal";
 import VeiculosLogin from "./pages/Veiculos/Login";
 import AgendaVeiculos from "./pages/Veiculos/AgendaVeiculos";
+import MinhasReservas from "./pages/Veiculos/MinhasReservas.jsx";
 
 import "./index.css";
 
@@ -86,6 +87,7 @@ function AppContent() {
           <Route path="/veiculos" element={<VeiculosPortal />} />
           <Route path="/veiculos/login" element={<VeiculosLogin />} />
           <Route path="/veiculos/agenda" element={<AgendaVeiculos />} /> 
+          <Route path="/veiculos/minhas-reservas" element={<MinhasReservas />}></Route>
 
         </Routes>
       </main>

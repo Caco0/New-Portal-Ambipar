@@ -190,6 +190,17 @@ const statusConfig = {
             ) : (
             /* MOTORISTA AUTENTICADO */
             <>
+                {/* ACESSO ÀS rESERVAS DO MOTORISTA */}
+
+                <div className="flex flex-wrap gap-3">
+                    <Link 
+                    to="/veiculos/minhas-reservas"
+                    className="inline-flex items-center justify-center rounded-xl bg-[#B2CC21] px-6 py-3 font-bold text-black transition hover:brightness-110 dark:bg-[#CDFF00]"
+                    >
+                        🚙 Minhas Reservas
+                    </Link>
+                </div>
+
                 {/* INDICADORES */}
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 {indicadores.map((item) => (

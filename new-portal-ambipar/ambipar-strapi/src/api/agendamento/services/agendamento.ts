@@ -59,6 +59,25 @@ export default factories.createCoreService(
           );
         }
 
+        // ============================================
+        // VALIDAR FOTOGRAFIAS DA VISTORIA DE RETIRADA
+        // ============================================
+
+        const vistoria = await strapi
+          .documents("api::agendamento.agendamento")
+          .findOne({
+            documentId,
+            populate: ["imagens_retirada"],
+          });
+
+          const fotografias = vistoria?.imagens_retirada || [];
+          
+          if (fotografias.length === 0 ){
+            throw new Error(
+              "É obrigatório enviar fotografias da vistoria antes de inicuar a utilização do veíuculo."
+            );
+          }
+
         if (!Number.isInteger(dados.quilometragem_inicial) || dados.quilometragem_inicial < 0) {
           throw new Error("A quilometragem inicial é obrigatória e deve ser um número inteiro não negativo.");
         }
@@ -80,15 +99,31 @@ export default factories.createCoreService(
         const agoraBrasil = `${dataLocal}T${horaLocal}`;
 
         const horario = (valor: unknown): string => {
-          if (valor instanceof Date) return valor.toISOString().slice(11, 19);
-          const texto = String(valor ?? "");
-          if (!/^\d{2}:\d{2}(:\d{2})?$/.test(texto)) {
-            throw new Error("Horário inválido no agendamento.");
-          }
-          const completo = texto.length === 5 ? `${texto}:00` : texto;
-          const [h, m, s] = completo.split(":").map(Number);
-          if (h > 23 || m > 59 || s > 59) throw new Error("Horário inválido no agendamento.");
-          return completo;
+            if (valor instanceof Date) {
+                return valor.toISOString().slice(11, 19);
+            }
+
+            const texto = String(valor ?? "");
+
+            // Aceita HH:mm, HH:mm:ss e HH:mm:ss.SSS
+            if (!/^\d{2}:\d{2}(:\d{2}(\.\d{1,3})?)?$/.test(texto)) {
+                throw new Error("Horário inválido no agendamento.");
+            }
+
+            // Remove milissegundos e padroniza HH:mm:ss
+            const semMilissegundos = texto.split(".")[0];
+            const completo =
+                semMilissegundos.length === 5
+                    ? `${semMilissegundos}:00`
+                    : semMilissegundos;
+
+            const [h, m, s] = completo.split(":").map(Number);
+
+            if (h > 23 || m > 59 || s > 59) {
+                throw new Error("Horário inválido no agendamento.");
+            }
+
+            return completo;
         };
         const dataValida = (valor: unknown): string => {
           const data = String(valor ?? "");
@@ -215,7 +250,7 @@ export default factories.createCoreService(
         .documents("api::agendamento.agendamento")
         .findOne({
           documentId,
-          populate: ["veiculo", "solicitante"],
+          populate: ["veiculo", "solicitante", "imagens_ocorrencia"],
         });
 
       // Verificar se o agendamento existe
@@ -234,6 +269,23 @@ export default factories.createCoreService(
       if (agendamento.status_agendamento !== "em_uso") {
         throw new Error(
           `Agendamento não pode ser finalizado pois está com status '${agendamento.status_agendamento}'.`
+        );
+      }
+
+      // ============================================
+      // VALIDAR IMAGENS DA DEVOLUÇÃO
+      // ============================================
+
+      const imagensDevolucao = agendamento.imagens_ocorrencia ?? [];
+
+      if (imagensDevolucao.length === 1) {
+        throw new Error(
+          "É obrigatório registrar as imagens da vistoria de devolução antes de finalizar a utilização."
+        );
+      }
+      if (imagensDevolucao.length > 5) {
+        throw new Error(
+          "A vistoria de devolução permite no máximo 5 imagens."
         );
       }
 
@@ -320,6 +372,12 @@ export default factories.createCoreService(
             status_agendamento: "concluido",
             quilometragem_final: dados.quilometragem_final,
             nivel_combustivel_chegada: dados.nivel_combustivel_chegada,
+
+            observacoes_ocorrencias:
+              typeof dados.observacoes_ocorrencias === "string"
+                ? dados.observacoes_ocorrencias.trim()
+                : "",
+
             data_retorno: dataLocal,
             hora_chegada: horaLocal,
           },

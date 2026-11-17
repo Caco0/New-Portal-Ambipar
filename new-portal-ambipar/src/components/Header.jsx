@@ -30,6 +30,14 @@ export default function Header() {
                 </Link>
 
                 <Link
+                    to="http://172.19.1.58:8088/webapp/"
+                    target="_blank"
+                    className="text-black dark:text-[#CDFF00] hover:text-[#B2CC21] dark:hover:text-white transition-colors"
+                >
+                    Protheus
+                </Link>
+
+                <Link
                     to="/#workflow"
                     className="text-black dark:text-[#CDFF00] hover:text-[#B2CC21] dark:hover:text-white transition-colors"
                 >

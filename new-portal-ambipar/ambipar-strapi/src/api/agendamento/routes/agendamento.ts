@@ -56,6 +56,17 @@ export default {
         },
         },
 
+        // ============================================
+        // VISTORIA DE DEVOLUÇÃO
+        // ============================================
+        {
+        method: "POST",
+        path: "/agendamentos/:documentId/vistoria-devolucao",
+        handler: "agendamento.vistoriaDevolucao",
+        config: {
+            policies: [],
+        },
+        },
         // Finalizar utilização do veículo
 
         {
@@ -67,11 +78,30 @@ export default {
         },
         },
 
+        // EDITAR RESERVA NÃO INICIADA
+        {
+            method: "PUT",
+            path: "/agendamentos/:documentId/editar",
+            handler: "agendamento.editar",
+            config: {
+                policies: [],
+            },
+        },
+
+        // Cancelamento de reserva não iniciada
+        {
+            method: "POST",
+            path: "/agendamentos/:documentId/cancelar",
+            handler: "agendamento.cancelar",
+            config: {
+                policies: [],
+            },
+        },
 
         {
         method: "PUT",
-        path: "/agendamentos/:id",
-        handler: "agendamento.update",
+        path: "/agendamentos/:documentId/editar",
+        handler: "agendamento.editar    ",
         config: {
             policies: ["global::e-proprietario-do-agendamento"],
         },

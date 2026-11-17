@@ -442,10 +442,15 @@ export interface ApiAgendamentoAgendamento extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    cancelado_por: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     data_agendada: Schema.Attribute.Date & Schema.Attribute.Required;
+    data_cancelamento: Schema.Attribute.DateTime;
     data_fim_prevista: Schema.Attribute.Date;
     data_inicio_real: Schema.Attribute.Date;
     data_retorno: Schema.Attribute.Date;
@@ -457,6 +462,7 @@ export interface ApiAgendamentoAgendamento extends Struct.CollectionTypeSchema {
     hora_inicio_real: Schema.Attribute.Time;
     imagens_ocorrencia: Schema.Attribute.Media<'images', true>;
     imagens_retirada: Schema.Attribute.Media<'images', true>;
+    justificativa_cancelamento: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -481,7 +487,7 @@ export interface ApiAgendamentoAgendamento extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Required;
     status_agendamento: Schema.Attribute.Enumeration<
-      ['reservado', 'em_uso', 'concluido']
+      ['reservado', 'em_uso', 'concluido', 'cancelado']
     > &
       Schema.Attribute.DefaultTo<'reservado'>;
     updatedAt: Schema.Attribute.DateTime;

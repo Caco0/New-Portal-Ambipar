@@ -27,7 +27,7 @@ export default function LinksCarousel() {
         { title: "🌐 Sistema Sygecom", url: "https://sistema.sygecom.com.br/magma", color: "border-green-500", description: "Processos sistema Sygecom" },
         { title: "🚚 Logística", url: "/logisticalinks", color: "border-pink-500", description: "Links de reatreamento de Logística." },
         { title: "💰 Financeiro", url: "/financeiroLinks", color: "border-green-500", description: "Links Financeiros." },
-        { title: "📊 Dashboard", url: "#", color: "border-red-500", description: "Torre de Dados Ambipar (em construção)" },
+        { title: "📊 Protheus", url: "http://172.19.1.58:8088/webapp/", color: "border-red-500", description: "TOTVs Protheus Sitema." },
         { title: "⏱ Registro de Ponto", url: "https://ezpoint.com.br/", color: "border-black", description: "Registro de ponto" },
     ];
 

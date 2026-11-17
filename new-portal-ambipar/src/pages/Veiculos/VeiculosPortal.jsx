@@ -40,6 +40,7 @@ const statusConfig = {
     const [veiculos, setVeiculos] = useState([]);
     const [loading, setLoading] = useState(Boolean(token));
     const [erro, setErro] = useState("");
+    const [pesquisaVeiculo, setPesquisaVeiculo] = useState("");
 
     useEffect(() => {
         if (!token) {
@@ -99,6 +100,20 @@ const statusConfig = {
         setVeiculos([]);
         navigate("/veiculos", { replace: true });
     }
+
+    // Busca por nome ou placa, ignorando maiúsculas, espaços e hífens.
+    const normalizarBusca = (valor) =>
+        String(valor ?? "")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase()
+            .replace(/[^a-z0-9]/g, "");
+
+    const termoBusca = normalizarBusca(pesquisaVeiculo);
+    const veiculosFiltrados = veiculos.filter((veiculo) =>
+        normalizarBusca(veiculo.nome).includes(termoBusca) ||
+        normalizarBusca(veiculo.placa).includes(termoBusca)
+    );
 
     const operacionais = veiculos.filter(
         (v) => v.status_veiculo === "disponivel"
@@ -226,8 +241,46 @@ const statusConfig = {
                     Veículos da Frota
                     </h2>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Identifique o veículo pela placa e consulte sua condição.
+                    Identifique o veículo pela placa e consulte sua condição, ou pesquise pelo nome ou placa.
                     </p>
+                </div>
+
+                <div className="relative max-w-xl">
+                    <label htmlFor="pesquisa-veiculo" className="sr-only">
+                        Pesquisar veículo por nome ou placa
+                    </label>
+                    <svg
+                        aria-hidden="true"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500"
+                    >
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.35-4.35" />
+                    </svg>
+                    <input
+                        id="pesquisa-veiculo"
+                        type="search"
+                        value={pesquisaVeiculo}
+                        onChange={(evento) => setPesquisaVeiculo(evento.target.value)}
+                        placeholder="Digite o nome ou a placa..."
+                        autoComplete="off"
+                        className="w-full rounded-xl border border-gray-300 bg-white py-3 pl-12 pr-12 text-gray-900 outline-none transition focus:border-[#B2CC21] focus:ring-2 focus:ring-[#B2CC21]/40 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+                    />
+                    {pesquisaVeiculo && (
+                        <button
+                            type="button"
+                            onClick={() => setPesquisaVeiculo("")}
+                            aria-label="Limpar pesquisa"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg px-2 py-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
+                        >
+                            ✕
+                        </button>
+                    )}
                 </div>
 
                 {erro && (
@@ -243,9 +296,13 @@ const statusConfig = {
                     <p>Carregando veículos...</p>
                 ) : veiculos.length === 0 && !erro ? (
                     <p>Nenhum veículo cadastrado.</p>
+                ) : veiculosFiltrados.length === 0 ? (
+                    <p role="status" className="rounded-xl border border-dashed border-gray-300 p-5 text-sm text-gray-600 dark:border-gray-700 dark:text-gray-400">
+                        Nenhum veículo encontrado para “{pesquisaVeiculo}”.
+                    </p>
                 ) : (
                     <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-                    {veiculos.map((veiculo) => {
+                    {veiculosFiltrados.map((veiculo) => {
                         const status =
                         statusConfig[veiculo.status_veiculo] ||
                         statusConfig.indisponivel;

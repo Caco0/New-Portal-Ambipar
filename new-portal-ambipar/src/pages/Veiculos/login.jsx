@@ -58,6 +58,21 @@ export default function VeiculosLogin() {
         }
     }
 
+    if (import.meta.env.PROD) {
+        return (
+            <section className="min-h-[calc(100vh-80px)] flex items-center justify-center bg-white dark:bg-[#0b1220]">
+                <div className="max-w-md rounded-xl p-8 text-center shadow-xl dark:bg-gray-900">
+                    <h2 className="mb-3 text-xl font-bold dark:text-white">
+                        Sistema de Agendamento de Veículos
+                    </h2>
+                    <p className="text-gray-600 dark:text-gray-300">
+                        Módulo em desenvolvimento. Disponível em breve.
+                    </p>
+                </div>
+            </section>
+        );
+    }
+
     return (
         <section className="min-h-[calc(100vh-80px)] bg-white text-gray-900 flex items-center justify-center dark:bg-[#0b1220] dark:text-gray-100">
             <div className="relative mx-auto flex min-h-[600px] w-full items-center justify-center px-4 py-10">
@@ -154,6 +169,7 @@ export default function VeiculosLogin() {
                                     >
                                         {showPassword ? "🙈" : "👁"}
                                     </button>
+                                    
                                 </div>
                             </div>
 
@@ -183,4 +199,5 @@ export default function VeiculosLogin() {
             </div>
         </section>
     );
+    
 }

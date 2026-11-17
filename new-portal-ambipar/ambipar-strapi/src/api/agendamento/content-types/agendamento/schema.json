@@ -26,9 +26,28 @@
         },
 
         "status_agendamento": {
-        "type": "enumeration",
-        "enum": ["reservado", "em_uso", "concluido"],
-        "default": "reservado"
+            "type": "enumeration",
+            "enum": [
+                "reservado",
+                "em_uso",
+                "concluido",
+                "cancelado"
+            ],
+            "default": "reservado"
+        },
+
+        "justificativa_cancelamento": {
+            "type": "text"
+        },
+
+        "data_cancelamento": {
+            "type": "datetime"
+        },
+
+        "cancelado_por": {
+            "type": "relation",
+            "relation": "manyToOne",
+            "target": "plugin::users-permissions.user"
         },
 
         "destino": { "type": "string", "required": true },
